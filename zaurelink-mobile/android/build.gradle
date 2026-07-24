@@ -1,0 +1,37 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath('com.android.tools.build:gradle')
+    classpath('com.facebook.react:react-native-gradle-plugin')
+    // Pinned explicitly (bypassing the expoLibs version-catalog default, which did not actually
+    // move the applied compiler plugin despite android.kotlinVersion in gradle.properties — only
+    // dependency versions like kotlin-stdlib picked that up, leaving compiler/stdlib mismatched).
+    // com.google.ai.edge.litertlm:litertlm-android:0.14.0 needs a compiler that can read Kotlin
+    // 2.3.0 metadata.
+    classpath('org.jetbrains.kotlin:kotlin-gradle-plugin:2.3.0')
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://www.jitpack.io' }
+  }
+}
+
+// Paired with the classpath pin above: expo-modules-core's own build.gradle interpolates
+// ${kotlinVersion} for its kotlin-stdlib-jdk7/kotlin-reflect dependency versions, and
+// ExpoRootProjectPlugin's KSP-version lookup also reads extra.get("kotlinVersion") — both need to
+// agree with the actual compiler now on the classpath, or we're back to a stdlib/compiler split.
+ext {
+  kotlinVersion = "2.3.0"
+}
+
+apply plugin: "expo-root-project"
+apply plugin: "com.facebook.react.rootproject"

@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- Android 11+ package visibility: allow querying installed TTS engines (e.g. eSpeak NG) so
+       isLanguageAvailable() can discover a Hausa-capable engine. TRD §5. -->
+  <queries>
+    <intent>
+      <action android:name="android.intent.action.TTS_SERVICE" />
+    </intent>
+  </queries>
+</manifest>

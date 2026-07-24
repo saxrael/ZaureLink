@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- TRD §3/§4: on-device mic capture + AudioManager routing. Merged into the app manifest. -->
+  <uses-permission android:name="android.permission.RECORD_AUDIO" />
+  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+  <!-- Bluetooth SCO earpiece routing (PRD private channel). Legacy BLUETOOTH caps at API 30; -->
+  <!-- BLUETOOTH_CONNECT is the API 31+ runtime permission for SCO/headset access. -->
+  <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+  <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+</manifest>

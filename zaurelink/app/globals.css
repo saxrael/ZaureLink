@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f1b30;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Brand: navy (ink/structure) + orange (voice/energy) — same palette as the ZaureLink app. */
+  --color-navy-950: #0a1526;
+  --color-navy-900: #0f1b30;
+  --color-navy-850: #16294a;
+  --color-navy-800: #1f355f;
+  --color-navy-700: #2c4878;
+  --color-navy-600: #3a5b93;
+  --color-navy-500: #5677ab;
+  --color-navy-300: #a7b8d4;
+  --color-navy-100: #e5eaf3;
+  --color-navy-50: #f3f6fb;
+
+  --color-orange-700: #c9750f;
+  --color-orange-600: #e8830a;
+  --color-orange-500: #fa9923;
+  --color-orange-400: #fbad4d;
+  --color-orange-300: #fdc482;
+  --color-orange-100: #feecd2;
+  --color-orange-50: #fef6ea;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 3.5s ease-in-out infinite;
+  --animate-marquee: marquee 28s linear infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+}

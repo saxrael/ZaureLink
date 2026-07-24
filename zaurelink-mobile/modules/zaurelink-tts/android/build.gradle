@@ -1,0 +1,25 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.zaurelinktts'
+version = '0.1.0'
+
+android {
+  namespace "expo.modules.zaurelinktts"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
+
+dependencies {
+  // TRD §5 audio output: Hausa TTS via Meta MMS (facebook/mms-tts-hau), a 36M VITS model run on
+  // ONNX Runtime Mobile. Same runtime the audio module uses for Silero — Gemma still does all the
+  // translation; this only vocalizes the Hausa text Gemma produces.
+  implementation 'com.microsoft.onnxruntime:onnxruntime-android:1.20.0'
+}

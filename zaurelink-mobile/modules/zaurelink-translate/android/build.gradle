@@ -1,0 +1,27 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.zaurelinktranslate'
+version = '0.1.0'
+
+android {
+  namespace "expo.modules.zaurelinktranslate"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
+
+dependencies {
+  // Pinned, not latest.release — TRD §2.3 notes flags/API can change release-to-release; verify
+  // against this exact version before bumping. Real API confirmed via javap against the AAR itself.
+  implementation "com.google.ai.edge.litertlm:litertlm-android:0.14.0"
+  // Native PCM hand-off (TRD §2.2): translate resolves an utteranceId to the audio module's
+  // retained PCM natively, so raw audio never crosses the JS bridge.
+  implementation project(':zaurelink-audio')
+}

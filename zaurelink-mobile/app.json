@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "zaurelink",
+    "slug": "zaurelink-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/zaurelink-icon.png",
+    "scheme": "zaurelink-mobile",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.zaurelink.mobile",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/zaurelink-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/zaurelink-icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      "expo-status-bar"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "56ae95f0-f777-4aa6-b886-f6c27939bbec"
+      }
+    },
+    "owner": "eawebcraft"
+  }
+}
