@@ -1,2 +1,7 @@
 .claude/
-docs/
+/docs/
+drafts/
+AGENTS.md
+CLAUDE.md
+*.apk
+
