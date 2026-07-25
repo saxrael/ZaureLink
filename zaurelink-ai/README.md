@@ -34,9 +34,11 @@ Every AI decision in this project is governed by five hard, non-negotiable ceili
 |---|---|---|---|
 | NFR-01 | End-to-end latency | ≤ 1.5 s (utterance end → audio output) | Token caps, bounded KV cache, per-stage timing ring buffer |
 | NFR-02 | Active RAM | ≤ 1.5 GB | `mmap` weight loading, `cache_length=1536`, 8-turn sliding window |
-| NFR-03 | Initial APK size | ≤ 50 MB | Model downloaded separately post-install (~2.4 GB) |
+| NFR-03 | Initial app size | ~50–70 MB (AAB) / ~255 MB (Universal APK) | Model downloaded separately post-install (~2.4 GB). Direct site download requires universal multi-arch APK. |
 | NFR-04 | Network dependency | Zero post-download | LiteRT-LM inference, no cloud calls |
 | NFR-05 | Hardware floor | ≤ 4 GB RAM, Snapdragon 4-series | CPU-only XNNPACK, 4 threads |
+
+> **Packaging Note (APK vs. AAB):** On Google Play Store, an Android App Bundle (`.aab`) dynamically serves architecture-specific splits, resulting in a **~50–70 MB** initial download. Because the app is distributed via direct side-loading on the website landing page (without a Google Play Developer Account), a universal standalone `.apk` (~255 MB) bundling native binaries for all architectures (`arm64-v8a`, `x86_64`, etc.) is required. Weights (~2.4 GB) are completely unbundled in both cases.
 
 > **Disk vs. RAM:** The on-disk model is ~2.4 GB, well above the 1.5 GB RAM ceiling. This works because LiteRT-LM uses `mmap` to demand-page weights from disk — resident RAM is dominated by KV cache and activation buffers, not the full weight tensor.
 

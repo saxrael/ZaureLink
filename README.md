@@ -59,7 +59,7 @@ ZaureLink solves both problems: an **on-device LLM** with **domain-aware prompt 
 4. **Privacy-first hardware routing** — earpiece is the user's private I/O; phone mic/speaker is public. Bluetooth disconnect **fails closed** (halts and mutes).
 5. **Conversation memory** — bounded 8-turn sliding window resolves references (e.g., *"reduce it"* to a quoted price 3 turns earlier).
 6. **Sunlight-legible UI** — high-contrast, large-type transcript designed for outdoor use in direct Nigerian midday sun.
-7. **Zero weights in APK** — thin shell install (~50 MB); ~2.4 GB Gemma 4 E2B model + ~109 MB Hausa TTS download post-install with resume and SHA-256 verification.
+7. **Zero weights in APK** — thin shell install (~50–70 MB AAB / ~255 MB universal APK for direct side-loading); ~2.4 GB Gemma 4 E2B model + ~109 MB Hausa TTS download post-install with resume and SHA-256 verification.
 
 ---
 
@@ -115,15 +115,15 @@ The end-to-end pipeline from fieldwork data to on-device translation:
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Hard System Constraints
+| ID | Constraint | Target | Notes |
+|---|---|---|---|
+| NFR-01 | End-to-end latency | ≤ 1.5 s (utterance end → audio output) | Token caps, bounded KV cache, per-stage timing ring buffer |
+| NFR-02 | Active RAM | ≤ 1.5 GB | `mmap` weight loading, `cache_length=1536`, 8-turn sliding window |
+| NFR-03 | Initial App Size | ~50–70 MB (AAB) / ~255 MB (Universal APK) | Model weights downloaded separately post-install (~2.4 GB). See note below. |
+| NFR-04 | Network dependency | Zero post-download | LiteRT-LM inference, no cloud calls |
+| NFR-05 | Hardware floor | ≤ 4 GB RAM, Snapdragon 4-series | CPU-only XNNPACK, 4 threads |
 
-| ID | Constraint | Target |
-|---|---|---|
-| NFR-01 | End-to-end latency | ≤ 1.5 s (utterance end → audio output) |
-| NFR-02 | Active RAM | ≤ 1.5 GB |
-| NFR-03 | Initial APK size | ≤ 50 MB |
-| NFR-04 | Network dependency | Zero post-download |
-| NFR-05 | Hardware floor | ≤ 4 GB RAM, Snapdragon 4-series |
+> **Packaging & APK Size Note:** An Android App Bundle (`.aab`) distributed on Google Play dynamically splits native libraries per CPU architecture, yielding an initial download of **~50–70 MB**. Without a Google Play Developer account for Play Store distribution, direct website side-loading requires a universal standalone `.apk` (~255 MB) that bundles native binaries for all CPU architectures (`arm64-v8a`, `armeabi-v7a`, `x86_64`) into a single binary. Model weights (~2.4 GB) are completely unbundled and fetched post-install in both formats.
 
 ---
 

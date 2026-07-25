@@ -5,9 +5,9 @@ import { GradientMesh } from "./GradientMesh";
 import { Reveal } from "./Reveal";
 import { publicAsset } from "../lib/publicAsset";
 
-// Drop the signed release build at public/downloads/zaurelink.apk and rebuild. Until then this
-// section renders a waiting state rather than a button that 404s, and the size below is read off the
-// real file instead of being a number in a comment that nobody updates.
+// Drop the signed release build at public/downloads/zaurelink.apk OR set EXTERNAL_APK_URL to a GitHub Release / hosted asset URL.
+// When an external URL is set or a local file is found, this component renders an active download button.
+const EXTERNAL_APK_URL: string | null = "https://github.com/saxrael/ZaureLink/releases/download/v1.0.0/zaurelink.apk";
 const APK_PATH = "/downloads/zaurelink.apk";
 const APK_VERSION = "v1.0";
 
@@ -19,6 +19,9 @@ const REQUIREMENTS = [
 
 export function Download() {
   const apk = publicAsset(APK_PATH);
+  const isAvailable = Boolean(EXTERNAL_APK_URL || apk.exists);
+  const downloadUrl = EXTERNAL_APK_URL || (apk.exists ? APK_PATH : "#");
+  const sizeDisplay = apk.sizeLabel || "244MB";
 
   return (
     <section id="download" className="relative overflow-hidden bg-navy-950 py-28">
@@ -26,7 +29,7 @@ export function Download() {
       <Container className="relative">
         <Reveal className="mx-auto max-w-xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-orange-400/30 bg-orange-500/10 px-4 py-1.5 text-xs font-semibold tracking-wide text-orange-300 uppercase">
-            {apk.exists ? (
+            {isAvailable ? (
               <>
                 <Smartphone className="h-3.5 w-3.5" />
                 Available now
@@ -59,17 +62,17 @@ export function Download() {
                     ZaureLink for Android
                   </p>
                   <p className="text-xs text-white/45">
-                    {apk.exists
-                      ? `${APK_VERSION} · ${apk.sizeLabel} · .apk`
+                    {isAvailable
+                      ? `${APK_VERSION} · ${sizeDisplay} · .apk`
                       : "Production build · .apk"}
                   </p>
                 </div>
               </div>
             </div>
 
-            {apk.exists ? (
+            {isAvailable ? (
               <Button
-                href={APK_PATH}
+                href={downloadUrl}
                 download="zaurelink.apk"
                 size="lg"
                 variant="primary"

@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ZaureLink — Marketing & Download Landing Page
 
-## Getting Started
+This directory contains the marketing and direct-download landing page for **ZaureLink**, built with **Next.js 16**, **Tailwind CSS v4**, and **TypeScript**.
 
-First, run the development server:
+It serves as the public web interface for the project and hosts the direct APK download link via **GitHub Releases**.
+
+---
+
+## 🌟 Key Features
+
+1. **Direct APK Download**: Links directly to the published standalone Android release asset hosted on GitHub Releases (`https://github.com/saxrael/ZaureLink/releases/download/v1.0.0/zaurelink.apk`).
+2. **Asset Detection (`publicAsset`)**: Integrates server-side asset verification (`app/lib/publicAsset.ts`) to dynamically detect file availability and display exact binary size labels.
+3. **Interactive Audio & Feature Demo**: Previews Market Mode vs. Campus Mode conversation flows.
+4. **Sunlight-Legible Design**: Styled with curated dark-mode glassmorphism aesthetics.
+
+---
+
+## 🚀 Getting Started
+
+### Local Development
 
 ```bash
+cd zaurelink
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build & Production Check
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ⚙️ Configuration & Download URL Wiring
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The download CTA is driven by [`app/components/Download.tsx`](./app/components/Download.tsx):
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```typescript
+// Configured to point directly to the published GitHub Release asset
+const EXTERNAL_APK_URL = "https://github.com/saxrael/ZaureLink/releases/download/v1.0.0/zaurelink.apk";
+```
 
-## Deploy on Vercel
+### Downloading Assets outside Git (Git Size Limits)
+Because standard Git repositories enforce a 100MB per-file limit (and the standalone universal APK is ~243.7MB), the binary APK is hosted via **GitHub Releases** rather than tracked inside `public/downloads/`. The website download button directly links to the external release URL, eliminating build output limits and repository bloat.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License & Subsystem Links
+
+- **Main Repository**: [github.com/saxrael/ZaureLink](../README.md)
+- **Mobile App**: [`zaurelink-mobile/`](../zaurelink-mobile/README.md)
+- **AI Engineering**: [`zaurelink-ai/`](../zaurelink-ai/README.md)

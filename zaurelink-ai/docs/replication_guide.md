@@ -26,7 +26,7 @@ The non-negotiable ceilings, carried across the PRD and TRD without exception, a
 |---|---|---|
 | End-to-end latency (NFR-01) | ≤1.5s, measured from end of utterance | Per-stage timing in a latency ring buffer; token caps bound inference time |
 | Active RAM (NFR-02) | ≤1.5GB | `Mmap` weight loading + bounded `cache_length`/`context_length` + 8-turn sliding window |
-| Initial APK size (NFR-03) | ≤50MB | Model shipped separately, post-install, never bundled |
+| Initial app size (NFR-03) | ~50–70MB (AAB) / ~255MB (Universal APK) | Model shipped separately, post-install, never bundled. Direct site download uses universal multi-arch APK. |
 | Network dependency (NFR-04) | Zero, post-download | All components on-device |
 | Target hardware floor | ≤4GB RAM, Snapdragon 4-series | CPU-only XNNPACK inference path, no GPU assumption |
 

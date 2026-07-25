@@ -187,7 +187,7 @@ A **development build** is enough to fully exercise the app, including the ~2.6G
 
 ### First-run model download
 
-The APK ships with **zero model weights** (target ≤50MB shell). On first launch:
+The app ships with **zero model weights** (target ~50–70MB shell on Play Store via AAB; ~255MB standalone universal APK for direct website download). On first launch:
 
 1. The app is fully browsable in a mock/preview mode — never a blank screen while the model is missing.
 2. A single-screen download flow fetches the ~2.6GB Gemma 4 E2B model and the ~109MB Hausa voice model, Wi-Fi-only by default, with a storage-space pre-check and pause/resume support.
@@ -198,7 +198,8 @@ The APK ships with **zero model weights** (target ≤50MB shell). On first launc
 
 ## Known limitations & roadmap
 
-- **Fine-tuned model not yet integrated** — `Gemma4FineTunedProvider` is a stub pending the fine-tuning workstream's LoRA-merged export; the Baseline provider (stock Gemma 4 E2B) is what's currently demoable end-to-end.
+- **Standalone Universal APK Size vs. Play Store AAB** — Without a Google Play Developer account to publish via Android App Bundle (`.aab` — which serves architecture-specific splits of ~50–70 MB per device), direct website side-loading requires a universal `.apk` (~255 MB) containing native binaries (`.so` files for LiteRT, ONNX Runtime, WebRTC) compiled for all CPU architectures (`arm64-v8a`, `x86_64`, etc.). Model weights (~2.6 GB) remain unbundled in both formats.
+- **Fine-tuned model integration** — `Gemma4FineTunedProvider` is a stub pending full app integration of the Kaggle-exported LoRA-merged `.litertlm` artifact; the Baseline provider (stock Gemma 4 E2B) is used for the active demo.
 - **NFR-05 (battery)** — no continuous-session battery threshold has been set yet; this needs a real power-draw measurement on the target hardware floor before it can be enforced.
 - **VAD confidence threshold** is field-tunable (dev-settings slider, default 0.5) but not yet validated against real market/campus noise recordings.
 - **Overlapping/simultaneous speech** is explicitly out of scope by design, not oversight — the two-microphone hardware split (earpod vs. phone mic) already solves speaker separation for the app's own two participants; true single-mic blind-source separation for two people speaking in exact unison was evaluated and rejected as infeasible within scope (tested directly against Gemma 4 E2B's native audio pathway, which collapsed a two-voice sample to one).
