@@ -87,9 +87,13 @@ export type ModelDownloadState = {
   isWifi: boolean | null;
   start: (wifiOnly: boolean) => Promise<void>;
   pause: () => Promise<void>;
-  resume: () => Promise<void>;
+  resume: (wifiOnly: boolean) => Promise<void>;
   refresh: () => Promise<void>;
   modelPath: string;
+  /** True when a partially-downloaded file can be continued. Lets the UI offer "resume" instead of
+   * silently restarting a multi-GB transfer — the difference between costing the user 50MB and
+   * costing them 2.6GB after one dropped connection. */
+  canResume: boolean;
 };
 
 export function useModelDownload(config: AssetConfig): ModelDownloadState {
@@ -106,8 +110,20 @@ export function useModelDownload(config: AssetConfig): ModelDownloadState {
   const [error, setError] = React.useState<string | null>(null);
   const [freeBytes, setFreeBytes] = React.useState<number | null>(null);
   const [isWifi, setIsWifi] = React.useState<boolean | null>(null);
+  const [canResume, setCanResume] = React.useState(false);
   const downloadRef = React.useRef<FileSystem.DownloadResumable | null>(null);
   const lastPersistRef = React.useRef(0);
+
+  // Shared by start() and resume(): the Wi-Fi-only rule has to apply to BOTH, or the setting is a
+  // lie the moment a download is interrupted. Returns an error message, or null when it's safe.
+  const networkBlock = React.useCallback(async (wifiOnly: boolean): Promise<string | null> => {
+    const net = await Network.getNetworkStateAsync();
+    const wifi = net.type === Network.NetworkStateType.WIFI;
+    setIsWifi(wifi);
+    return wifiOnly && !wifi
+      ? 'On mobile data. Connect to Wi-Fi, or turn off "Wi-Fi only" to continue.'
+      : null;
+  }, []);
 
   const persistResumeState = React.useCallback(
     async (dl: FileSystem.DownloadResumable) => {
@@ -144,6 +160,7 @@ export function useModelDownload(config: AssetConfig): ModelDownloadState {
     try {
       const ok = await ZaurelinkTranslate.verifyFileChecksum(modelUri, config.sha256);
       await clearResumeState(); // download is done (good or bad) — a stale resume token is useless either way
+      setCanResume(false); // the transfer finished; whatever happens next is not a continuation
       if (ok) {
         await FileSystem.writeAsStringAsync(verifiedFlagUri, new Date().toISOString());
         setPhase('ready');
@@ -167,6 +184,7 @@ export function useModelDownload(config: AssetConfig): ModelDownloadState {
     const model = await FileSystem.getInfoAsync(modelUri);
     const verified = await FileSystem.getInfoAsync(verifiedFlagUri);
     if (model.exists && verified.exists) {
+      setCanResume(false);
       setPhase('ready');
       return;
     }
@@ -184,12 +202,14 @@ export function useModelDownload(config: AssetConfig): ModelDownloadState {
           onProgress,
           saved.resumeData
         );
+        setCanResume(true);
         setPhase('paused');
         return;
       } catch {
         await clearResumeState();
       }
     }
+    setCanResume(false);
     setPhase('absent');
   }, [modelUri, verifiedFlagUri, resumeStateUri, onProgress, clearResumeState]);
 
@@ -232,11 +252,9 @@ export function useModelDownload(config: AssetConfig): ModelDownloadState {
         }
 
         // Wi-Fi-only default (PRD §3.1). Toggle off to allow cellular.
-        const net = await Network.getNetworkStateAsync();
-        const wifi = net.type === Network.NetworkStateType.WIFI;
-        setIsWifi(wifi);
-        if (wifiOnly && !wifi) {
-          setError('On mobile data. Connect to Wi-Fi, or turn off "Wi-Fi only" to continue.');
+        const blocked = await networkBlock(wifiOnly);
+        if (blocked) {
+          setError(blocked);
           setPhase('error');
           return;
         }
@@ -245,6 +263,7 @@ export function useModelDownload(config: AssetConfig): ModelDownloadState {
         setPhase('downloading');
         const dl = FileSystem.createDownloadResumable(config.url, modelUri, {}, onProgress);
         downloadRef.current = dl;
+        setCanResume(true);
         const result = await dl.downloadAsync();
         if (!result) return; // paused mid-flight; resume() continues
         await verify();
@@ -264,20 +283,47 @@ export function useModelDownload(config: AssetConfig): ModelDownloadState {
     setPhase('paused');
   }, [persistResumeState]);
 
-  const resume = React.useCallback(async () => {
-    const dl = downloadRef.current;
-    if (!dl) return;
-    setPhase('downloading');
-    try {
-      const result = await dl.resumeAsync();
-      if (result) await verify();
-    } catch (e) {
-      setError(`Resume failed: ${String(e)}`);
-      setPhase('error');
-    }
-  }, [verify]);
+  const resume = React.useCallback(
+    async (wifiOnly: boolean) => {
+      const dl = downloadRef.current;
+      if (!dl) return;
+      setError(null);
 
-  return { phase, progress, error, freeBytes, isWifi, start, pause, resume, refresh, modelPath: modelUri };
+      const blocked = await networkBlock(wifiOnly);
+      if (blocked) {
+        setError(blocked);
+        setPhase('error');
+        return;
+      }
+
+      setPhase('downloading');
+      try {
+        const result = await dl.resumeAsync();
+        if (result) await verify();
+      } catch (e) {
+        // Deliberately does NOT clear the resume token or canResume: a dropped connection is the
+        // normal case on a multi-GB mobile download, and the bytes already on disk are still good.
+        // The UI offers another resume rather than making the user re-fetch everything.
+        setError(`Resume failed: ${String(e)}`);
+        setPhase('error');
+      }
+    },
+    [verify, networkBlock]
+  );
+
+  return {
+    phase,
+    progress,
+    error,
+    freeBytes,
+    isWifi,
+    start,
+    pause,
+    resume,
+    refresh,
+    modelPath: modelUri,
+    canResume,
+  };
 }
 
 function formatSize(bytes: number): string {

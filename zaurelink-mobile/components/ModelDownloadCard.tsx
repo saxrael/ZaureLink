@@ -33,6 +33,33 @@ export function ModelDownloadCard({
   const [wifiOnly, setWifiOnly] = React.useState(true);
   const APPROX_GB = `${(config.approxBytes / 1_000_000_000).toFixed(1)}GB`;
 
+  // Rendered in every state that can start or continue a transfer — not just `absent`. It used to
+  // appear only on the first-run card, so a download that failed with "turn off Wi-Fi only to
+  // continue" gave the user no way to do that: the retry button re-ran with the same setting and
+  // produced the same error, with no route out except finding Wi-Fi.
+  const wifiToggle = (
+    <View className="flex-row items-center gap-2">
+      <PressScale
+        onPress={() => setWifiOnly((v) => !v)}
+        accessibilityRole="button"
+        accessibilityLabel={wifiOnly ? 'Wi-Fi only, on' : 'Wi-Fi only, off'}
+        className={`flex-row items-center gap-1.5 self-start rounded-full px-3 py-1.5 ${
+          wifiOnly ? 'bg-primary' : 'bg-border'
+        }`}>
+        <Icon
+          as={Wifi}
+          size={13}
+          color={wifiOnly ? BRAND.navy : undefined}
+          className={wifiOnly ? '' : 'text-foreground'}
+        />
+        <Text
+          className={`text-xs font-medium ${wifiOnly ? 'text-primary-foreground' : 'text-foreground'}`}>
+          Wi-Fi only
+        </Text>
+      </PressScale>
+    </View>
+  );
+
   // No card while checking, on web, or once the offline model file is present + verified.
   if (dl.phase === 'checking' || dl.phase === 'unsupported') return null;
 
@@ -55,18 +82,7 @@ export function ModelDownloadCard({
             {blurb ??
               `A one-time ~${APPROX_GB} download unlocks fully offline translation. Demo mode works without it.`}
           </Text>
-          <View className="flex-row items-center gap-2">
-            <PressScale
-              onPress={() => setWifiOnly((v) => !v)}
-              className={`flex-row items-center gap-1.5 self-start rounded-full px-3 py-1.5 ${
-                wifiOnly ? 'bg-primary' : 'bg-border'
-              }`}>
-              <Icon as={Wifi} size={13} color={wifiOnly ? BRAND.navy : undefined} className={wifiOnly ? '' : 'text-foreground'} />
-              <Text className={`text-xs font-medium ${wifiOnly ? 'text-primary-foreground' : 'text-foreground'}`}>
-                Wi-Fi only
-              </Text>
-            </PressScale>
-          </View>
+          {wifiToggle}
           <PressScale
             onPress={() => dl.start(wifiOnly)}
             className="flex-row items-center justify-center gap-2 self-start rounded-full bg-primary px-5 py-2.5">
@@ -92,8 +108,9 @@ export function ModelDownloadCard({
       {dl.phase === 'paused' ? (
         <>
           <ProgressBar value={dl.progress} />
+          {wifiToggle}
           <PressScale
-            onPress={dl.resume}
+            onPress={() => dl.resume(wifiOnly)}
             className="flex-row items-center justify-center gap-2 self-start rounded-full bg-primary px-5 py-2.5">
             <Icon as={Download} size={16} color={BRAND.navy} />
             <Text className="text-sm font-semibold text-primary-foreground">
@@ -113,11 +130,35 @@ export function ModelDownloadCard({
             <Icon as={AlertCircle} size={16} className="mt-0.5 text-destructive" />
             <Text className="flex-1 text-sm text-destructive">{dl.error}</Text>
           </View>
-          <PressScale
-            onPress={() => dl.start(wifiOnly)}
-            className="self-start rounded-full bg-primary px-5 py-2.5">
-            <Text className="text-sm font-semibold text-primary-foreground">Retry</Text>
-          </PressScale>
+          {dl.canResume ? <ProgressBar value={dl.progress} /> : null}
+          {wifiToggle}
+          {/* Continuing is the primary action whenever there are bytes on disk worth keeping —
+              a dropped connection partway through a ~2.6GB transfer must not cost the whole
+              transfer. Starting over stays available, but demoted, because it is the expensive
+              choice and should be taken deliberately rather than by reflex. */}
+          {dl.canResume ? (
+            <View className="flex-row flex-wrap items-center gap-2">
+              <PressScale
+                onPress={() => dl.resume(wifiOnly)}
+                className="flex-row items-center gap-2 self-start rounded-full bg-primary px-5 py-2.5">
+                <Icon as={Download} size={16} color={BRAND.navy} />
+                <Text className="text-sm font-semibold text-primary-foreground">
+                  Resume ({Math.round(dl.progress * 100)}%)
+                </Text>
+              </PressScale>
+              <PressScale
+                onPress={() => dl.start(wifiOnly)}
+                className="self-start rounded-full px-4 py-2.5">
+                <Text className="text-sm font-medium text-muted-foreground">Start over</Text>
+              </PressScale>
+            </View>
+          ) : (
+            <PressScale
+              onPress={() => dl.start(wifiOnly)}
+              className="self-start rounded-full bg-primary px-5 py-2.5">
+              <Text className="text-sm font-semibold text-primary-foreground">Retry</Text>
+            </PressScale>
+          )}
         </>
       ) : null}
     </View>
