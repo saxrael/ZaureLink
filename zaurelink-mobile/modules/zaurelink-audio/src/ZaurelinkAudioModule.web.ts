@@ -33,7 +33,12 @@ class ZaurelinkAudioModule extends NativeModule<ZaurelinkAudioModuleEvents> {
 
   setCaptureMode(_mode: CaptureMode): void {}
 
-  setVadConfig(_rmsThreshold: number, _minSpeechFrames: number, _minSilenceFrames: number): void {}
+  setVadConfig(
+    _rmsThreshold: number,
+    _sileroThreshold: number,
+    _minSpeechFrames: number,
+    _minSilenceFrames: number
+  ): void {}
 
   async startCapture(_preferBluetooth: boolean): Promise<void> {
     throw new Error('Audio capture is not available on web — use the text input for preview.');

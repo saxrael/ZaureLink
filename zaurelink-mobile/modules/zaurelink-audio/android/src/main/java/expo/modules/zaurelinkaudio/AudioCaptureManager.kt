@@ -89,8 +89,21 @@ class AudioCaptureManager(
 
   val isActive: Boolean get() = isCapturing
 
-  fun setVadConfig(rmsThreshold: Double, minSpeechFrames: Int, minSilenceFrames: Int) {
+  /**
+   * TRD §3.1 field-tunables. [rmsThreshold] applies to the energy baseline and [sileroThreshold] to
+   * the neural engine — they are NOT the same scale (normalized RMS vs. a 0..1 speech probability),
+   * so a single number cannot drive both. Previously only the energy value was applied, which meant
+   * the sensitivity control was a silent no-op on every device where Silero actually loaded — i.e.
+   * the normal case — leaving auto-VAD stuck at the compiled-in default with no way to tune it.
+   */
+  fun setVadConfig(
+    rmsThreshold: Double,
+    sileroThreshold: Double,
+    minSpeechFrames: Int,
+    minSilenceFrames: Int,
+  ) {
     energyVad.rmsThreshold = rmsThreshold
+    sileroVad?.threshold = sileroThreshold.toFloat()
     gate.minSpeechFrames = minSpeechFrames
     gate.minSilenceFrames = minSilenceFrames
   }
@@ -243,7 +256,12 @@ class AudioCaptureManager(
     joinThread(500)
     releaseRecord()
 
-    if (mode == CaptureMode.PUSH_TO_TALK || inSpeech) {
+    // An explicit stop is an explicit end-of-utterance, in either mode. Previously auto-VAD only
+    // committed when the gate happened to still be mid-speech, so tapping stop after the gate had
+    // already closed — or when it never opened at all because the VAD was too strict — threw the
+    // captured audio away with no event and no error: from the user's side, the turn just silently
+    // did nothing. Committing whatever is buffered makes the stop button always mean "commit".
+    if (mode == CaptureMode.PUSH_TO_TALK || inSpeech || utterance.isNotEmpty()) {
       finalizeUtterance()
     } else {
       utterance.clear()

@@ -26,12 +26,13 @@ class ZaurelinkTranslateModule : Module() {
     get() = appContext.reactContext ?: throw Exceptions.ReactContextLost()
 
   private val mockProvider by lazy { MockTranslationProvider() }
-  private val fineTunedProvider by lazy { Gemma4FineTunedProvider() }
 
-  // Not `by lazy` like the others: the baseline provider needs a JS-supplied modelPath, and is
-  // rebuilt if that path ever changes (e.g. a new fine-tuned/baseline artifact version).
-  private var baselineProvider: Gemma4BaselineProvider? = null
-  private var baselineModelPath: String? = null
+  // Not `by lazy` like the mock: the Gemma providers need a JS-supplied modelPath, and are rebuilt
+  // if that path or the tier changes (e.g. switching between the baseline and fine-tuned artifacts).
+  // Keyed by tier so both can be resident: the baseline stays loadable as the TRD §2.4 rollback
+  // rather than being destroyed the moment the fine-tuned model is selected.
+  private val gemmaProviders = mutableMapOf<ProviderTier, Gemma4BaselineProvider>()
+  private val gemmaModelPaths = mutableMapOf<ProviderTier, String>()
 
   @Volatile
   private var tier: ProviderTier = ProviderTier.MOCK
@@ -40,15 +41,41 @@ class ZaurelinkTranslateModule : Module() {
   // an in-flight conversation consistent even if the active tier is toggled.
   private val sessions = mutableMapOf<String, Pair<TranslationProvider, ConversationSession>>()
 
+  /**
+   * Records the model path for a Gemma tier and returns that tier for activation. Both Gemma tiers
+   * are the same LiteRT-LM integration over a different .litertlm file, so they share one
+   * construction path — a parallel implementation could only drift away from this one.
+   *
+   * Reuses the existing instance when the path is unchanged: rebuilding would drop an initialized
+   * Engine and pay the multi-second model load again for nothing.
+   */
+  private fun selectGemmaTier(target: ProviderTier, modelPath: String?): ProviderTier {
+    // LiteRT-LM's native loader does its own fopen/mmap on modelPath — it doesn't understand the
+    // "file://" URI scheme expo-file-system hands us (unlike verifyFileChecksum above, which strips
+    // it via java.io.File). Without this, EngineConfig gets a literal "file://..." string and
+    // LiteRtLmJniException reports the model file as not found.
+    val path =
+      (modelPath
+          ?: throw IllegalArgumentException(
+            "setProvider('${target.value}', ...) requires a modelPath",
+          ))
+        .removePrefix("file://")
+    if (gemmaProviders[target] == null || gemmaModelPaths[target] != path) {
+      gemmaProviders[target] = Gemma4BaselineProvider(context, path, target)
+      gemmaModelPaths[target] = path
+    }
+    return target
+  }
+
   private fun providerFor(t: ProviderTier): TranslationProvider =
     when (t) {
       ProviderTier.MOCK -> mockProvider
-      ProviderTier.BASELINE ->
-        baselineProvider
+      ProviderTier.BASELINE, ProviderTier.FINE_TUNED ->
+        gemmaProviders[t]
           ?: throw IllegalStateException(
-            "Baseline provider selected but no model path was set — call setProvider('baseline', modelPath) first.",
+            "${t.value} provider selected but no model path was set — " +
+              "call setProvider('${t.value}', modelPath) first.",
           )
-      ProviderTier.FINE_TUNED -> fineTunedProvider
     }
 
   override fun definition() =
@@ -83,21 +110,8 @@ class ZaurelinkTranslateModule : Module() {
       // itself is lazy (first startConversation call), so this just records the path.
       Function("setProvider") { name: String, modelPath: String? ->
         when (name) {
-          "baseline" -> {
-            // LiteRT-LM's native loader does its own fopen/mmap on modelPath — it doesn't understand
-            // the "file://" URI scheme expo-file-system hands us (unlike verifyFileChecksum above,
-            // which strips it via java.io.File). Without this, EngineConfig gets a literal
-            // "file://..." string and LiteRtLmJniException reports the model file as not found.
-            val path =
-              (modelPath ?: throw IllegalArgumentException("setProvider('baseline', ...) requires a modelPath"))
-                .removePrefix("file://")
-            if (baselineProvider == null || baselineModelPath != path) {
-              baselineProvider = Gemma4BaselineProvider(context, path)
-              baselineModelPath = path
-            }
-            tier = ProviderTier.BASELINE
-          }
-          "fine_tuned" -> tier = ProviderTier.FINE_TUNED
+          "baseline" -> tier = selectGemmaTier(ProviderTier.BASELINE, modelPath)
+          "fine_tuned" -> tier = selectGemmaTier(ProviderTier.FINE_TUNED, modelPath)
           else -> tier = ProviderTier.MOCK
         }
       }

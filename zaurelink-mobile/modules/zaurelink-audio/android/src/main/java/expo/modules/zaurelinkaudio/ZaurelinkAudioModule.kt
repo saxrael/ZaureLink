@@ -67,8 +67,13 @@ class ZaurelinkAudioModule : Module() {
       }
 
       // Dev-tunable VAD parameters (TRD §3.1: field-tune against real recordings, never hardcode).
-      Function("setVadConfig") { rmsThreshold: Double, minSpeechFrames: Int, minSilenceFrames: Int ->
-        ensureCapture().setVadConfig(rmsThreshold, minSpeechFrames, minSilenceFrames)
+      Function("setVadConfig") {
+          rmsThreshold: Double,
+          sileroThreshold: Double,
+          minSpeechFrames: Int,
+          minSilenceFrames: Int,
+        ->
+        ensureCapture().setVadConfig(rmsThreshold, sileroThreshold, minSpeechFrames, minSilenceFrames)
       }
 
       // Start capture. preferBluetooth routes to the private earpod channel when an SCO device is

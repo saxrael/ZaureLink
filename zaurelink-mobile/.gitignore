@@ -50,7 +50,9 @@ android/.cxx/
 android/app/.cxx/
 android/.kotlin/
 modules/*/android/build/
+modules/*/android/.gradle/
 modules/*/android/.cxx/
+modules/*/android/.kotlin/
 modules/*/android/.gradle/
 modules/*/android/.kotlin/
 *.hprof

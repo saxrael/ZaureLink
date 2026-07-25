@@ -21,7 +21,14 @@ declare class ZaurelinkAudioModule extends NativeModule<ZaurelinkAudioModuleEven
   /** Set utterance-segmentation strategy (default push_to_talk). Takes effect on next startCapture. */
   setCaptureMode(mode: CaptureMode): void;
   /** Field-tune the VAD (TRD §3.1). rmsThreshold is normalized 0..1 for the energy baseline. */
-  setVadConfig(rmsThreshold: number, minSpeechFrames: number, minSilenceFrames: number): void;
+  /** rmsThreshold drives the energy baseline; sileroThreshold (0..1 speech probability) drives the
+   * neural engine. Separate scales — one value cannot tune both. */
+  setVadConfig(
+    rmsThreshold: number,
+    sileroThreshold: number,
+    minSpeechFrames: number,
+    minSilenceFrames: number
+  ): void;
   /** Start push-to-talk capture. Routes to the private earpod channel when preferBluetooth and an
    * SCO device is present, else the public phone mic/speaker channel (TRD §4.1). */
   startCapture(preferBluetooth: boolean): Promise<void>;

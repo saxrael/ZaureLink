@@ -1,6 +1,7 @@
 package expo.modules.zaurelinktranslate
 
 import android.content.Context
+import android.util.Log
 import com.google.ai.edge.litertlm.Backend
 import com.google.ai.edge.litertlm.Content
 import com.google.ai.edge.litertlm.Contents
@@ -8,16 +9,90 @@ import com.google.ai.edge.litertlm.Conversation
 import com.google.ai.edge.litertlm.ConversationConfig
 import com.google.ai.edge.litertlm.Engine
 import com.google.ai.edge.litertlm.EngineConfig
+import com.google.ai.edge.litertlm.ExperimentalApi
+import com.google.ai.edge.litertlm.ExperimentalFlags
 import com.google.ai.edge.litertlm.SamplerConfig
 import java.io.ByteArrayOutputStream
 
-// TRD §2.1a (revised): 4 system prompts (Environment × AppUserLanguage), verbatim — not 2. None
-// vary per-turn; ModeConfigResolver selects exactly one at session start. Each prompt applies 3
-// ordered rules (pass-through / translate / treat a mixed-language utterance as one unit) and
-// gives concrete domain glossaries (currency, units, idiom, greetings for Market; fares, clinical
-// language, academic/admin terms for Campus) rather than trusting the model to infer local
-// convention unaided.
+/**
+ * TRD §2.1a: 4 system prompts (Environment × AppUserLanguage). None vary per-turn; exactly one is
+ * selected at session start.
+ *
+ * These are CONDENSED from the verbatim TRD §2.1a text (kept below as [SYSTEM_PROMPTS_VERBOSE] for
+ * reference and A/B comparison). The verbatim prompts measure 538-707 tokens, and because the
+ * system instruction is prefilled on the first turn of every conversation — and a conversation
+ * restarts on environment/language change and on the inactivity timeout — that prefill lands on
+ * the user as dead latency repeatedly, not once. Measured: Market 538 -> 370 tokens, Campus
+ * 707 -> 454 (~31-36% off the prefill) for the same semantics. Further compression is possible but
+ * would start cutting glossary content, which is what makes the output domain-correct rather than
+ * generically bilingual — not a trade worth making for another second.
+ *
+ * What is preserved exactly, because correctness depends on it: the three ordered rules
+ * (pass-through / translate / mixed-utterance-as-one-unit — rule 1 IS FR-13), the role-to-language
+ * mapping, every concrete glossary example, the instruction to use conversation history and hold
+ * register, and the output-only-the-result constraint. What was cut is restatement and hedging.
+ *
+ * Both variants of a mode are generated from one template rather than written twice, so the Hausa
+ * and English forms cannot drift apart — the earlier duplicated-literal form made that a live risk.
+ */
 private val SYSTEM_PROMPTS: Map<Environment, Map<AppUserLanguage, String>> =
+  mapOf(
+    Environment.MARKET to
+      mapOf(
+        AppUserLanguage.ENGLISH to marketPrompt(AppUserLanguage.ENGLISH),
+        AppUserLanguage.HAUSA to marketPrompt(AppUserLanguage.HAUSA),
+      ),
+    Environment.CAMPUS to
+      mapOf(
+        AppUserLanguage.ENGLISH to campusPrompt(AppUserLanguage.ENGLISH),
+        AppUserLanguage.HAUSA to campusPrompt(AppUserLanguage.HAUSA),
+      ),
+  )
+
+/** The app user is the customer here; the trader is the other party. */
+private fun marketPrompt(appUserLanguage: AppUserLanguage): String {
+  val customer = if (appUserLanguage == AppUserLanguage.ENGLISH) "English" else "Hausa"
+  val trader = if (appUserLanguage == AppUserLanguage.ENGLISH) "Hausa" else "English"
+  return """
+    You are a translation engine in Market Mode. A trader and a customer are talking live. The customer needs output in $customer; the trader needs output in $trader. Either party may speak either language, or mix both within one sentence.
+
+    Apply these rules in order:
+    1. If the speaker already used the language the listener needs, relay their words accurately without changing the language -- do not translate what does not need translating.
+    2. Otherwise, translate it into the listener's required language.
+    3. If an utterance mixes Hausa and English, treat the whole utterance as one unit and translate its full meaning -- never output a half-translated sentence.
+
+    Resolve intent, not words: currency shorthand into real figures ("dari biyar" = 500 naira, "dubu biyu" = 2,000 naira); bargaining idiom ("farashi na karshe" = "final price", not "my last price"); market units (mudu, tiya, roba -- nearest standard equivalent, or keep the local term with a short gloss); greetings and blessings by social intent ("Allah ya kara albarka" -> "May God increase your blessings"), relayed unchanged when both parties share the formula.
+
+    Use earlier turns to resolve prices, items and quantities, and keep each speaker's tone and register consistent. If intent is genuinely ambiguous, translate your best reading of what was said rather than guessing at unstated meaning.
+
+    Output only the translated or relayed result -- no commentary, explanations, or metadata.
+    """.trimIndent()
+}
+
+/** The app user is the student here; the other party is deliberately open-ended. */
+private fun campusPrompt(appUserLanguage: AppUserLanguage): String {
+  val student = if (appUserLanguage == AppUserLanguage.ENGLISH) "English" else "Hausa"
+  val other = if (appUserLanguage == AppUserLanguage.ENGLISH) "Hausa" else "English"
+  return """
+    You are a translation engine in Campus Mode, covering everyday interactions outside the market. A student is talking live with another party -- a driver, chemist, fellow student, lecturer, or administrative staff. The student needs output in $student; the other party needs output in $other. Either party may speak either language, or mix both within one sentence.
+
+    Apply these rules in order:
+    1. If the speaker already used the language the listener needs, relay their words accurately without changing the language -- do not translate what does not need translating.
+    2. Otherwise, translate it into the listener's required language.
+    3. If an utterance mixes Hausa and English, treat the whole utterance as one unit and translate its full meaning -- never output a half-translated sentence.
+
+    Resolve intent, not words: transport terms and fares (Keke = tricycle taxi, Okada = motorcycle taxi; "dari biyu" in a fare context = "two hundred naira"); clinical language precisely ("jikina yana zafi" = "my body aches", not "my body is hot") -- preserve dosages, frequencies and medication names exactly, never paraphrased; academic and administrative terms (course registration, departments, exams, NYSC documentation, fee payment) in their standard equivalents; greetings and blessings by social intent rather than reduced to "hello", relaying shared formulas like "Alhamdulillahi" unchanged.
+
+    Use earlier turns to resolve a fare, symptom, course or document already mentioned, and keep each speaker's register -- formal with a lecturer, casual with a peer, clinical with a chemist. If intent is genuinely ambiguous, translate your best reading of what was said rather than guessing at unstated meaning.
+
+    Output only the translated or relayed result -- no commentary, explanations, or metadata.
+    """.trimIndent()
+}
+
+// Verbatim TRD §2.1a originals, retained for reference and A/B comparison against the condensed
+// prompts above. Not used at runtime.
+@Suppress("unused")
+private val SYSTEM_PROMPTS_VERBOSE: Map<Environment, Map<AppUserLanguage, String>> =
   mapOf(
     Environment.MARKET to
       mapOf(
@@ -90,8 +165,13 @@ private fun speakerTagFor(environment: Environment, activeChannel: ActiveChannel
 class Gemma4BaselineProvider(
   private val context: Context,
   private val modelPath: String,
+  /**
+   * Which tier this instance is serving. The fine-tuned artifact (TRD §2.4) is a LoRA-merged export
+   * of this same base, loaded through this identical code path with only a different file — so it
+   * gets this class rather than a parallel implementation that could drift out of sync with it.
+   */
+  override val tier: ProviderTier = ProviderTier.BASELINE,
 ) : TranslationProvider {
-  override val tier = ProviderTier.BASELINE
 
   @Volatile private var engine: Engine? = null
   private val engineLock = Any()
@@ -103,20 +183,76 @@ class Gemma4BaselineProvider(
     val conversation: Conversation,
   ) : ConversationSession(environment, appUserLanguage, maxWindowTurns)
 
+  /** True when the GPU delegate actually took; surfaced in latencyBreakdownMs so the backend that
+   * produced a given timing is never a guess. */
+  @Volatile private var usingGpu = false
+
+  @OptIn(ExperimentalApi::class)
   private fun ensureEngine(): Engine =
     engine ?: synchronized(engineLock) {
-      engine ?: Engine(
+      engine ?: run {
+        // Turns "it feels slow" into numbers. Populates Conversation.benchmarkInfo (prefill/decode
+        // token counts + tokens-per-second + time-to-first-token) which translate() folds into
+        // latencyBreakdownMs. Counter bookkeeping only — it does not itself slow inference, and
+        // it's the only way to tell a prefill-bound turn (long system prompt / audio tokens) from
+        // a decode-bound one (long output), which need opposite fixes.
+        ExperimentalFlags.enableBenchmark = true
+
+        // CPU first (NFR-07's floor), GPU only behind [PREFER_GPU]. The GPU path is kept because
+        // the reasoning for it still holds — prefill is the dominant first-turn cost and is exactly
+        // the parallel work a delegate helps — but it is NOT the default: see PREFER_GPU for what
+        // trying it by default actually did on-device.
+        // Last resort drops the token bound rather than the engine: MAX_NUM_TOKENS is a tuning
+        // value, and no tuning value is worth losing offline translation over if this runtime
+        // rejects it (it validates the bound against the model — see the "set max_num_tokens to at
+        // most" diagnostic in liblitertlm_jni).
+        (if (PREFER_GPU) buildEngine(useGpu = true) else null)
+          ?: buildEngine(useGpu = false)
+          ?: buildEngine(useGpu = false, maxTokens = null)
+          ?: error("LiteRT-LM engine failed to initialize")
+      }
+    }
+
+  /**
+   * Builds and initializes one engine, or returns null if that backend is unusable on this device.
+   * The audio encoder stays on CPU in both cases: GPU delegation of the audio pathway is the least
+   * exercised part of this runtime, and it is not worth risking the whole engine to accelerate the
+   * smaller half of the work.
+   *
+   * @param maxTokens context bound, or null to accept the runtime's own default (see MAX_NUM_TOKENS)
+   */
+  private fun buildEngine(useGpu: Boolean, maxTokens: Int? = MAX_NUM_TOKENS): Engine? =
+    try {
+      Engine(
           EngineConfig(
             modelPath = modelPath,
-            backend = Backend.CPU(), // NFR-07: CPU/XNNPACK, not GPU-assisted, per the target floor
-            audioBackend = Backend.CPU(),
+            // Bounds the KV cache instead of leaving it to the runtime default. Left unset, the
+            // cache is sized for a context this app never uses — every session is one ~370-454
+            // token system prompt plus short utterances, not a long document.
+            maxNumTokens = maxTokens,
+            // Thread count is set explicitly rather than left to the default: big.LITTLE phones
+            // stall LLM decode when work spreads onto the little cores, because every token waits
+            // on the slowest thread. Half the reported cores approximates the performance cluster
+            // on the usual 4+4 / 1+3+4 layouts. ⚠ Heuristic — verify against the benchmark numbers
+            // on a real device before treating it as tuned.
+            backend = if (useGpu) Backend.GPU() else Backend.CPU(threadCount = cpuThreadCount()),
+            audioBackend = Backend.CPU(threadCount = cpuThreadCount()),
             cacheDir = context.cacheDir.path, // improves load time per LiteRT-LM's own guidance
           ),
         )
         .also {
           it.initialize() // up to ~10s — safe here, caller already runs off the main thread
+          usingGpu = useGpu
           engine = it
+          Log.i(
+            TAG,
+            "LiteRT-LM engine initialized on ${if (useGpu) "GPU" else "CPU"}, " +
+              "maxNumTokens=${maxTokens ?: "runtime default"}",
+          )
         }
+    } catch (t: Throwable) {
+      Log.w(TAG, "LiteRT-LM ${if (useGpu) "GPU" else "CPU"} backend unavailable: ${t.message}")
+      null
     }
 
   override fun startConversation(
@@ -125,13 +261,34 @@ class Gemma4BaselineProvider(
     maxWindowTurns: Int,
   ): ConversationSession {
     val eng = ensureEngine()
+
+    // Greedy decoding (topK = 1) rather than the previous topK=40/topP=0.95/temp=0.3 sampling. Two
+    // reasons, both wins here: it drops the per-token top-k sort + nucleus filter over the candidate
+    // set, and translation genuinely wants the single most likely token — sampling buys variety that
+    // a translator has no use for, and makes output non-reproducible between demo runs.
+    // topP/temperature are left neutral rather than zeroed: with exactly one candidate the choice is
+    // argmax regardless, so this avoids depending on how the sampler handles a 0.0 temperature
+    // divisor.
+    val sampler = SamplerConfig(topK = 1, topP = 1.0, temperature = 1.0, seed = 0)
+
+    // The fine-tuned artifact may not need the system prompt at all: if the task was trained into
+    // the weights, re-sending ~370-454 tokens of instructions every session is pure prefill cost for
+    // behaviour the model already has — the single biggest latency lever left. But it is ONLY correct
+    // if the fine-tune was trained without these prompts in its inputs; dropping them from a model
+    // trained WITH them changes the input distribution it saw and degrades output. So this is a
+    // deliberate flag answered by whoever trained it, not something to infer here.
+    val sendSystemPrompt = tier != ProviderTier.FINE_TUNED || FINE_TUNED_EXPECTS_SYSTEM_PROMPT
     val conversation =
       eng.createConversation(
-        ConversationConfig(
-          systemInstruction = Contents.of(SYSTEM_PROMPTS.getValue(environment).getValue(appUserLanguage)),
-          // Low temperature: translation wants faithful, low-variance output, not creative sampling.
-          samplerConfig = SamplerConfig(topK = 40, topP = 0.95, temperature = 0.3, seed = 0),
-        ),
+        if (sendSystemPrompt) {
+          ConversationConfig(
+            systemInstruction =
+              Contents.of(SYSTEM_PROMPTS.getValue(environment).getValue(appUserLanguage)),
+            samplerConfig = sampler,
+          )
+        } else {
+          ConversationConfig(samplerConfig = sampler)
+        },
       )
     return BaselineSession(environment, appUserLanguage, maxWindowTurns, conversation)
   }
@@ -172,14 +329,96 @@ class Gemma4BaselineProvider(
       translatedText = translatedText,
       translatedAudio = null,
       sourceTranscript = textOverride,
-      latencyBreakdownMs = mapOf("baselineProvider" to (System.currentTimeMillis() - startedAt)),
+      latencyBreakdownMs = buildLatencyBreakdown(baseline, System.currentTimeMillis() - startedAt),
     )
   }
+
+  /**
+   * Wall-clock total plus, when the benchmark flag took effect, the split that actually explains it.
+   * The two diagnoses need opposite fixes: a high prefillTokens with low prefillTokensPerSec means
+   * the input side dominates (the ~700-token system prompt on turn 1, or audio tokens every turn —
+   * shorten the prompt / shorten the utterance), whereas a high decodeTokens means the model is
+   * simply writing too much (constrain the output). Guarded because benchmarkInfo is only meaningful
+   * once ExperimentalFlags.enableBenchmark has been set, and it's diagnostics — never worth throwing
+   * away a good translation over.
+   */
+  @OptIn(ExperimentalApi::class)
+  private fun buildLatencyBreakdown(session: BaselineSession, totalMs: Long): Map<String, Long> =
+    buildMap {
+      put("total", totalMs)
+      put("gpu", if (usingGpu) 1L else 0L)
+      // Declared as a function, not a `val`, so property-access syntax doesn't apply here.
+      runCatching { session.conversation.getBenchmarkInfo() }.getOrNull()?.let { b ->
+        put("timeToFirstTokenMs", (b.timeToFirstTokenInSecond * 1000).toLong())
+        put("prefillTokens", b.lastPrefillTokenCount.toLong())
+        put("decodeTokens", b.lastDecodeTokenCount.toLong())
+        put("prefillTokensPerSec", b.lastPrefillTokensPerSecond.toLong())
+        put("decodeTokensPerSec", b.lastDecodeTokensPerSecond.toLong())
+      }
+    }
 
   override fun endConversation(session: ConversationSession) {
     (session as BaselineSession).conversation.close()
   }
 }
+
+private const val TAG = "ZaurelinkGemma"
+
+/**
+ * Whether to attempt the GPU delegate before falling back to CPU.
+ *
+ * OFF because of a measured on-device regression, not caution in the abstract: with GPU attempted
+ * first, `Engine.initialize()` sat for several minutes on the "Preparing offline model" state
+ * instead of the ~10s the CPU path takes, because the delegate has to compile kernels and stage the
+ * whole int4 weight set into GPU memory before it returns. Two things make that unrecoverable
+ * rather than merely slow: `initialize()` is a blocking native call, so no timeout can abandon it,
+ * and the CPU fallback below only runs once it has finally failed — a device short on GPU memory
+ * pays the full stall AND then still loads on CPU.
+ *
+ * Flip to true only to measure it on a specific device, and read the `gpu` field in
+ * latencyBreakdownMs to confirm the delegate actually took rather than silently falling back.
+ */
+private const val PREFER_GPU = false
+
+/**
+ * Context bound passed as `EngineConfig.maxNumTokens`, which is what sizes the KV cache (the runtime
+ * derives `kv_cache_max` from it). Unset previously, so the cache was sized for the runtime default
+ * rather than for this app's actual shape: one ~370-454 token system prompt plus short utterances.
+ *
+ * 4096 rather than something tighter, and the reason is [ConversationSession.maxWindowTurns] — the
+ * declared 8-turn window is enforced by the Mock provider but NOT here, because LiteRT-LM's
+ * `Conversation` exposes no history-eviction API (verified against the 0.14.0 AAR: sendMessage,
+ * cancelProcess, getTokenCount, close — nothing that trims). So history on this path grows for a
+ * whole session until the inactivity reset recycles it, and the bound has to cover that session, not
+ * 8 turns. Truncating mid-conversation would corrupt translations silently, which is far worse than
+ * holding a larger cache.
+ *
+ * Implementing the real window means recycling the Conversation against `getTokenCount()` and
+ * replaying the last N turns through `ConversationConfig.initialMessages` — deliberately deferred,
+ * since it changes what the model sees mid-session.
+ */
+private const val MAX_NUM_TOKENS = 4096
+
+/**
+ * Whether the fine-tuned artifact still expects the TRD §2.1a system prompts in its input.
+ *
+ * TRUE is the conservative default and is deliberately NOT a guess about the training data: sending
+ * the prompts to a model that no longer needs them costs latency, whereas withholding them from a
+ * model that was trained with them corrupts output. Of the two ways to be wrong, only one produces
+ * bad translations, so the default takes the slow-but-correct side.
+ *
+ * Flip to false ONLY on confirmation from whoever trained it that the training inputs contained no
+ * system instruction (i.e. the model saw bare `speaker_tag: utterance`). Doing so removes ~370-454
+ * prefill tokens from the first turn of every session, which is the largest remaining latency win
+ * available — worth asking the question explicitly rather than leaving it at the safe default.
+ */
+private const val FINE_TUNED_EXPECTS_SYSTEM_PROMPT = true
+
+/** Threads for the CPU backend — see the rationale at the Backend.CPU call site. Clamped low: on a
+ * big.LITTLE phone, oversubscribing past the performance cluster makes each token wait on a little
+ * core, so more threads can be strictly slower. */
+private fun cpuThreadCount(): Int =
+  (Runtime.getRuntime().availableProcessors() / 2).coerceIn(2, 4)
 
 /** Wraps raw PCM16 mono samples in a standard 44-byte RIFF/WAVE header — Content.AudioBytes takes
  * a self-describing audio byte stream, not headerless PCM. */

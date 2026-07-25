@@ -5,6 +5,7 @@ import { Container } from "./Container";
 const LINKS = [
   { href: "#features", label: "Features" },
   { href: "#how-it-works", label: "How it works" },
+  { href: "#demo", label: "Demo" },
   { href: "#tech", label: "Tech" },
 ];
 

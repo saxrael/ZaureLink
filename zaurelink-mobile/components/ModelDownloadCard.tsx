@@ -2,20 +2,36 @@ import { PressScale } from '@/components/PressScale';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { BRAND } from '@/lib/brand';
-import { MODEL_CONFIG, type ModelDownloadState } from '@/lib/modelManager';
+import { MODEL_CONFIG, type AssetConfig, type ModelDownloadState } from '@/lib/modelManager';
 import { AlertCircle, CheckCircle2, Download, Pause, Wifi } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
-
-const APPROX_GB = `${(MODEL_CONFIG.approxBytes / 1_000_000_000).toFixed(1)}GB`;
 
 // FR-01 onboarding / asset-download UI. Rendered as a non-blocking banner so the app stays usable
 // in mock mode while the model downloads (FR-05 — never a blank screen).
 // `dl` is lifted up (useModelDownload called once in the screen) rather than called here, so the
 // screen can also react to phase changes — e.g. auto-switching to the real translation provider
 // once the model is ready.
-export function ModelDownloadCard({ dl }: { dl: ModelDownloadState }) {
+//
+// `config`/`title`/`blurb` are parameterized because there is now more than one multi-GB .litertlm
+// to fetch (the baseline and the TRD §2.4 fine-tuned artifact). They default to the baseline so the
+// original call site is unchanged — the alternative, a second near-identical card, would mean every
+// future download-UX fix has to be made twice.
+export function ModelDownloadCard({
+  dl,
+  config = MODEL_CONFIG,
+  title = 'Offline translation model',
+  blurb,
+  readyLabel = 'Offline model ready',
+}: {
+  dl: ModelDownloadState;
+  config?: AssetConfig;
+  title?: string;
+  blurb?: string;
+  readyLabel?: string;
+}) {
   const [wifiOnly, setWifiOnly] = React.useState(true);
+  const APPROX_GB = `${(config.approxBytes / 1_000_000_000).toFixed(1)}GB`;
 
   // No card while checking, on web, or once the offline model file is present + verified.
   if (dl.phase === 'checking' || dl.phase === 'unsupported') return null;
@@ -24,20 +40,20 @@ export function ModelDownloadCard({ dl }: { dl: ModelDownloadState }) {
     return (
       <View className="flex-row items-center gap-2 rounded-2xl bg-muted/60 px-4 py-2.5">
         <Icon as={CheckCircle2} size={14} color={BRAND.orange} />
-        <Text className="text-xs text-muted-foreground">Offline model ready</Text>
+        <Text className="text-xs text-muted-foreground">{readyLabel}</Text>
       </View>
     );
   }
 
   return (
     <View className="gap-3 rounded-2xl bg-muted/60 p-4">
-      <Text className="font-semibold text-foreground">Offline translation model</Text>
+      <Text className="font-semibold text-foreground">{title}</Text>
 
       {dl.phase === 'absent' ? (
         <>
           <Text className="text-sm text-muted-foreground">
-            A one-time ~{APPROX_GB} download unlocks fully offline translation. Demo mode works
-            without it.
+            {blurb ??
+              `A one-time ~${APPROX_GB} download unlocks fully offline translation. Demo mode works without it.`}
           </Text>
           <View className="flex-row items-center gap-2">
             <PressScale

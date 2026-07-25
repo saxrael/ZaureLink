@@ -27,6 +27,20 @@ export const MODEL_CONFIG: AssetConfig = {
   approxBytes: 2_588_147_712, // 2.59GB
 };
 
+// TRD §2.4 fine-tuned artifact: the LoRA-merged export of the same Gemma 4 E2B base, so this is a
+// full model file (2.56GB) rather than an adapter — it REPLACES the baseline .litertlm, it does not
+// layer on top of it. sha256 supplied with the artifact; size + public reachability confirmed by an
+// HTTP HEAD against the resolve URL (repo commit a8b8e37). Verified on-device before loading, same
+// as every other asset — the HF ETag is a Xet content hash and cannot stand in for SHA-256.
+// ⚠ Keep MODEL_CONFIG's baseline as the rollback path: if this artifact fails verification or
+// underperforms, the app must still have a working offline translator (TRD §2.4).
+export const FINE_TUNED_MODEL_CONFIG: AssetConfig = {
+  url: 'https://huggingface.co/israel-ayeni/ZaureLink/resolve/main/zaurelink-translator-v1.litertlm?download=true',
+  sha256: '48ee9a559e748dc08b9938733b53fd09d75f02d4c65114ba4b9f24795d1013bd',
+  fileName: 'zaurelink-translator-v1.litertlm',
+  approxBytes: 2_561_136_592, // 2.56GB (HEAD content-length)
+};
+
 // Hausa TTS voice: Meta MMS (facebook/mms-tts-hau), 36M VITS, exported to ONNX (willwade mirror).
 // Run on-device via ONNX Runtime to speak Gemma's Hausa output. sha256 + size verified by download.
 export const HAUSA_VOICE_CONFIG: AssetConfig = {
@@ -57,6 +71,12 @@ export function getAssetPath(config: AssetConfig): string {
 /** Absolute path handed to LiteRT-LM's EngineConfig(modelPath=…) for the Gemma provider. */
 export function getModelPath(): string {
   return getAssetPath(MODEL_CONFIG);
+}
+
+/** Same, for the fine-tuned artifact (TRD §2.4). Separate file, so both can sit on disk at once and
+ * the baseline stays available as a rollback. */
+export function getFineTunedModelPath(): string {
+  return getAssetPath(FINE_TUNED_MODEL_CONFIG);
 }
 
 export type ModelDownloadState = {

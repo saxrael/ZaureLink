@@ -8,6 +8,8 @@ import { VoiceWave, type WaveMode } from '@/components/VoiceWave';
 import { BRAND } from '@/lib/brand';
 import { checkBattery } from '@/lib/deviceGuards';
 import {
+  FINE_TUNED_MODEL_CONFIG,
+  getFineTunedModelPath,
   getModelPath,
   HAUSA_VOICE_CONFIG,
   MODEL_CONFIG,
@@ -27,6 +29,7 @@ import {
 import ZaurelinkTts from '@/modules/zaurelink-tts/src/ZaurelinkTtsModule';
 import { Stack } from 'expo-router';
 import {
+  ArrowRight,
   BluetoothOff,
   Download,
   Send,
@@ -35,10 +38,12 @@ import {
   Type as TypeIcon,
   Volume2,
   VolumeX,
+  Wifi,
+  X,
 } from 'lucide-react-native';
 import * as React from 'react';
-import { AppState, Image, Platform, ScrollView, TextInput, View } from 'react-native';
-import Animated, { FadeIn, FadeOut, useSharedValue, withTiming } from 'react-native-reanimated';
+import { AppState, Image, Modal, Platform, Pressable, ScrollView, TextInput, View } from 'react-native';
+import Animated, { FadeIn, useSharedValue, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const LOGO_ICON = require('@/assets/images/zaurelink-icon.png');
@@ -55,10 +60,21 @@ type Sensitivity = 'low' | 'medium' | 'high';
 // more easily. Field-tune against real market/campus recordings (TRD §3.1).
 const SENSITIVITY_RMS: Record<Sensitivity, number> = { low: 0.03, medium: 0.015, high: 0.008 };
 
+// Silero speech-probability thresholds (0..1) — a different scale from the RMS values above, so
+// they need their own mapping. Silero's own documented default is 0.5, which in practice is too
+// strict for a phone held at arm's length in a noisy place: the gate never opens and auto-listen
+// looks broken. Medium sits below that default deliberately.
+const SENSITIVITY_SILERO: Record<Sensitivity, number> = { low: 0.6, medium: 0.4, high: 0.25 };
+
 // PRD §3.5: conversation session memory window (TRD §2.2 conversation_window_turns: 8).
 const MAX_WINDOW_TURNS = 8;
 // FR-09: end/reset a session after this much inactivity (no speech or translation from either party).
-const INACTIVITY_MS = 3 * 60 * 1000;
+// Raised from 3min: a reset is not free. Starting a new conversation re-prefills the ~370-454 token
+// system instruction, which the user experiences as a slow first turn — so a timeout short enough to
+// fire during an ordinary lull (haggling over a price, waiting in a clinic queue, digging out a
+// student ID) makes the app feel slow at exactly the moments it should feel responsive. 10min still
+// resets a genuinely abandoned conversation before any stale context could bleed into a new one.
+const INACTIVITY_MS = 10 * 60 * 1000;
 
 type TranscriptEntry = TranslationResult & {
   id: string;
@@ -93,12 +109,17 @@ export default function Screen() {
   const [provider, setProvider] = React.useState<ProviderTier>('mock');
   const [speakEnabled, setSpeakEnabled] = React.useState(true); // NFR-06: audio output is core
   const [hausaVoice, setHausaVoice] = React.useState<boolean | null>(null);
+  const [hausaWifiOnly, setHausaWifiOnly] = React.useState(true);
   const [textScale, setTextScale] = React.useState<TextScale>('large'); // FR-12 large type default
   const [highContrast, setHighContrast] = React.useState(false); // FR-03 sunlight mode
   const [settingsOpen, setSettingsOpen] = React.useState(false); // keeps the home screen minimal
   const modelDownload = useModelDownload(MODEL_CONFIG); // lifted so the screen reacts to phase, not just the card
+  const fineTunedDownload = useModelDownload(FINE_TUNED_MODEL_CONFIG); // TRD §2.4 artifact (~2.6GB)
   const voiceDownload = useModelDownload(HAUSA_VOICE_CONFIG); // Hausa MMS voice (~109MB)
   const [preparingModel, setPreparingModel] = React.useState(false); // Engine.initialize() can take ~10s
+  // TRD §2.4 rollback: set if the fine-tuned artifact is present but its engine won't load. Demotes
+  // the app back to the baseline instead of retrying a model that has already failed once.
+  const [fineTunedUnusable, setFineTunedUnusable] = React.useState(false);
 
   // Refs so the mount-only audio-event listener always sees the latest values.
   const speakEnabledRef = React.useRef(speakEnabled);
@@ -119,6 +140,22 @@ export default function Screen() {
       : 'phone_mic';
   const resolvedChannelRef = React.useRef(resolvedChannel);
   resolvedChannelRef.current = resolvedChannel;
+
+  const captureModeRef = React.useRef(captureMode);
+  captureModeRef.current = captureMode;
+  // Counts committed utterances so endCapture() can tell "auto-listen produced nothing" apart from
+  // "auto-listen worked" without racing the native event.
+  const utteranceCountRef = React.useRef(0);
+
+  // What the NEXT turn will actually do. Without a Bluetooth earpiece the app falls back to
+  // phone_mic, which means "the other party is speaking" — so the output is the app user's OWN
+  // language, not the opposite one. That's correct per TRD §2.1, but it is completely invisible
+  // on screen, and it makes solo testing read as "it isn't translating" (speak English with
+  // My language = English and English is exactly what you should get back). Surfacing the
+  // resolved speaker + output language makes the routing legible instead of surprising.
+  const nextOutputLanguage = requiredOutputLanguage(appUserLanguage, resolvedChannel);
+  const nextSpeakerLabel =
+    resolvedChannel === 'earpod' ? 'You' : environment === 'market' ? 'Trader' : 'Other party';
 
   // FR-09 inactivity timeout: reset the conversation (clears bounded memory/context, PRD §3.5)
   // after a stretch with no speech or translation. Any activity bumps the timer.
@@ -221,6 +258,7 @@ export default function Screen() {
     const utterSub = ZaurelinkAudio.addListener(
       'onUtteranceReady',
       ({ utteranceId, durationMs, peakLevel }) => {
+        utteranceCountRef.current += 1;
         setLastUtterance(`Captured ${durationMs}ms (peak ${(peakLevel * 100).toFixed(0)}%)`);
         // Full pipeline: talk -> VAD segments -> utterance -> translate -> transcript. The Mock
         // tier returns canned text (it acknowledges the audio sample count), so the WIRE is real
@@ -240,21 +278,61 @@ export default function Screen() {
     setProvider(ZaurelinkTranslate.getProvider());
   }, []);
 
-  // TRD §2.1 baseline-first: once the model is verified on-device, switch off mock automatically
-  // so translation is real without any manual step. First switch triggers LiteRT-LM's
-  // Engine.initialize() (up to ~10s, TRD/LiteRT-LM docs) inside the startConversation() call below,
-  // which is already off the main thread — this effect just surfaces that wait in the UI.
+  // Which model cards the screen offers. Keeping this here rather than inline in the JSX because the
+  // rule it encodes is a product decision, not layout: a new install is asked for ONE ~2.6GB model.
+  const baselineOnDisk = modelDownload.phase === 'ready';
+  const baselineCardVisible =
+    baselineOnDisk ||
+    modelDownload.phase === 'downloading' ||
+    modelDownload.phase === 'paused' ||
+    modelDownload.phase === 'verifying' ||
+    // The fine-tuned model failed: the baseline is now the only route to offline translation, so it
+    // has to be reachable even on an install that never downloaded it.
+    fineTunedUnusable ||
+    modelDownload.phase === 'error';
+
+  // TRD §2.1/§2.4 best-available tier: the fine-tuned artifact wins when it is on disk and verified,
+  // the stock baseline is the fallback, and mock covers "no model yet" so the app is never dead
+  // (FR-05). Derived rather than stored, so it re-resolves when a download finishes or a model turns
+  // out to be unloadable.
+  const desiredTier: ProviderTier | null =
+    Platform.OS === 'web'
+      ? null
+      : fineTunedDownload.phase === 'ready' && !fineTunedUnusable
+        ? 'fine_tuned'
+        : modelDownload.phase === 'ready'
+          ? 'baseline'
+          : null;
+
+  // Switch off mock automatically once a model is verified on-device, so translation is real without
+  // any manual step. The first switch triggers LiteRT-LM's Engine.initialize() (~10s) inside the
+  // startConversation() call below, which is already off the main thread — this effect just surfaces
+  // that wait in the UI.
   React.useEffect(() => {
-    if (modelDownload.phase !== 'ready' || provider === 'baseline' || Platform.OS === 'web') return;
+    if (!desiredTier || provider === desiredTier) return;
     let cancelled = false;
     (async () => {
       setPreparingModel(true);
       try {
-        ZaurelinkTranslate.setProvider('baseline', getModelPath());
+        ZaurelinkTranslate.setProvider(
+          desiredTier,
+          desiredTier === 'fine_tuned' ? getFineTunedModelPath() : getModelPath()
+        );
         await startSession(environmentRef.current, appUserLanguageRef.current);
-        if (!cancelled) setProvider('baseline');
+        if (!cancelled) setProvider(desiredTier);
       } catch (e) {
-        if (!cancelled) setLastUtterance(`Could not switch to offline model: ${String(e)}`);
+        if (cancelled) return;
+        // A fine-tuned model that won't load must not strand the app (TRD §2.4 rollback): mark it
+        // unusable so this effect re-resolves onto the baseline. Without this the effect would loop
+        // forever, since a failed switch leaves provider !== desiredTier.
+        if (desiredTier === 'fine_tuned') {
+          setFineTunedUnusable(true);
+          setLastUtterance(
+            `Fine-tuned model failed to load — falling back to the baseline model. ${String(e)}`
+          );
+        } else {
+          setLastUtterance(`Could not switch to offline model: ${String(e)}`);
+        }
       } finally {
         if (!cancelled) setPreparingModel(false);
       }
@@ -263,7 +341,7 @@ export default function Screen() {
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modelDownload.phase, provider]);
+  }, [desiredTier, provider]);
 
   // Initialize TTS and check whether ANY installed engine has a Hausa voice (TRD §5). Note: no
   // real offline Hausa TTS is the MMS voice (facebook/mms-tts-hau) once its model is downloaded;
@@ -309,7 +387,26 @@ export default function Screen() {
 
   React.useEffect(() => {
     if (Platform.OS === 'web') return;
-    ZaurelinkAudio.setVadConfig(SENSITIVITY_RMS[sensitivity], 4, 20);
+    // TRANSITIONAL: setVadConfig gained a sileroThreshold parameter, but JS hot-reloads while the
+    // native module only changes on a rebuild — so a dev client built before that change is still
+    // exposing the 3-arg signature and throws "Received 4 arguments, but 3 was expected". Falling
+    // back keeps an older dev build usable instead of hard-failing on mount. Delete this shim once
+    // every install is past the 4-arg build; the fallback silently loses Silero tuning, which is
+    // exactly the bug this change exists to fix.
+    try {
+      ZaurelinkAudio.setVadConfig(
+        SENSITIVITY_RMS[sensitivity],
+        SENSITIVITY_SILERO[sensitivity],
+        4,
+        20
+      );
+    } catch {
+      (ZaurelinkAudio.setVadConfig as unknown as (r: number, s: number, m: number) => void)(
+        SENSITIVITY_RMS[sensitivity],
+        4,
+        20
+      );
+    }
   }, [sensitivity]);
 
   // PRD §3.5: switching Environment or Language is a genuine context change -> starts a new session.
@@ -362,18 +459,40 @@ export default function Screen() {
     setIsCapturing(false);
     levelSV.value = withTiming(0, { duration: 200 });
     await ZaurelinkAudio.stopCapture();
+    // Auto-listen commits on detected silence, so a session can legitimately end having produced
+    // nothing — but with no feedback that is indistinguishable from the app being broken. Native
+    // emits onUtteranceReady synchronously inside stopCapture(); the short delay is only to let
+    // that event finish crossing the bridge before we conclude nothing arrived.
+    if (captureModeRef.current === 'auto_vad') {
+      const before = utteranceCountRef.current;
+      setTimeout(() => {
+        if (utteranceCountRef.current === before) {
+          setLastUtterance('No speech detected. Raise mic sensitivity in Settings, or hold to talk.');
+        }
+      }, 400);
+    }
     // The mock provider can't translate audio yet (Phase 4). Capture is proven via the
     // onUtteranceReady metadata; use the text box to exercise the translation path for now.
   };
 
   // Push-to-talk (Phase 2): hold to capture one utterance.
+  // beginCapture() awaits a permission check + battery check before it ever calls native
+  // startCapture(), so a quick tap can fire onPressOut before isCapturing has actually flipped
+  // true. Gating on that stale state would skip stopCapture() entirely and leave the mic
+  // recording with nothing left to stop it. Instead, track the in-flight start and have
+  // onPressOut wait for it to finish before deciding to stop — native stopCapture() is already a
+  // safe no-op if start never succeeded, so no extra guard is needed here.
+  const captureStartRef = React.useRef<Promise<void> | null>(null);
+
   const handleMicPressIn = async () => {
     if (Platform.OS === 'web' || captureMode !== 'push_to_talk') return;
-    await beginCapture();
+    captureStartRef.current = beginCapture();
+    await captureStartRef.current;
   };
 
   const handleMicPressOut = async () => {
-    if (Platform.OS === 'web' || captureMode !== 'push_to_talk' || !isCapturing) return;
+    if (Platform.OS === 'web' || captureMode !== 'push_to_talk') return;
+    if (captureStartRef.current) await captureStartRef.current;
     await endCapture();
   };
 
@@ -452,8 +571,10 @@ export default function Screen() {
           flexGrow: 1,
         }}
         keyboardShouldPersistTaps="handled">
-        {/* Header: brand mark + settings entry point. Every other control lives behind the gear,
-            so the home screen stays down to environment + the mic + the conversation. */}
+        {/* Header: brand mark + settings entry point. Every other control lives behind this button,
+            so the home screen stays down to environment + the mic + the conversation. The button is
+            labelled, not a bare gear: a first-time user in a market has no reason to know a gear
+            glyph hides the listening mode and voice controls, and this is the only way into them. */}
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center gap-2.5">
             <Image source={LOGO_ICON} style={{ width: 36, height: 36, borderRadius: 10 }} />
@@ -462,14 +583,39 @@ export default function Screen() {
             </Text>
           </View>
           <PressScale
-            onPress={() => setSettingsOpen((v) => !v)}
-            className="h-11 w-11 items-center justify-center rounded-full bg-secondary"
+            onPress={() => setSettingsOpen(true)}
+            className="h-11 flex-row items-center gap-2 rounded-full bg-secondary px-4"
+            accessibilityRole="button"
             accessibilityLabel="Settings">
-            <Icon as={Settings2} size={20} color={BRAND.navy} />
+            <Icon as={Settings2} size={19} color={BRAND.navy} />
+            <Text style={{ color: BRAND.navy }} className="text-sm font-semibold">
+              Settings
+            </Text>
           </PressScale>
         </View>
 
-        <ModelDownloadCard dl={modelDownload} />
+        {/* The fine-tuned artifact is THE offline model for a new install (TRD §2.4) — one ~2.6GB
+            download, not two. The stock baseline is deliberately not offered alongside it: a fresh
+            user asked to fetch both would move 5.2GB to end up with one working translator, and the
+            fine-tuned model is the better of the two anyway. Baseline stays visible only where it
+            earns its place — already on disk (installs predating the fine-tune, where it is the
+            active model and the fine-tune is a genuine upgrade), mid-download, or as the fallback
+            when the fine-tuned model has failed and something has to cover for it. */}
+        {baselineCardVisible ? <ModelDownloadCard dl={modelDownload} /> : null}
+
+        {!fineTunedUnusable ? (
+          <ModelDownloadCard
+            dl={fineTunedDownload}
+            config={FINE_TUNED_MODEL_CONFIG}
+            title={baselineOnDisk ? 'Fine-tuned translator' : 'Offline translation model'}
+            blurb={
+              baselineOnDisk
+                ? 'Optional ~2.6GB upgrade: the ZaureLink-tuned model, trained on Hausa market and campus speech. The baseline model stays installed as a fallback.'
+                : 'A one-time ~2.6GB download unlocks fully offline translation — the ZaureLink-tuned model, trained on Hausa market and campus speech. Demo mode works without it.'
+            }
+            readyLabel="Fine-tuned model active"
+          />
+        ) : null}
 
         {btDisconnected ? (
           <Animated.View
@@ -522,6 +668,15 @@ export default function Screen() {
             onPress={handleMicToggle}
           />
           <VoiceWave level={levelSV} mode={waveMode} />
+          {/* Makes the per-turn routing visible: who the app thinks is speaking, and which
+              language the answer will come back in. */}
+          <View className="flex-row items-center gap-1.5 rounded-full bg-muted px-3 py-1.5">
+            <Text className="text-xs font-medium text-muted-foreground">{nextSpeakerLabel}</Text>
+            <Icon as={ArrowRight} size={12} className="text-muted-foreground" />
+            <Text className="text-xs font-semibold capitalize text-foreground">
+              {nextOutputLanguage}
+            </Text>
+          </View>
           <Text className="text-center text-base font-medium text-foreground">{heroCaption}</Text>
           {lastUtterance ? (
             <Text className="text-center text-xs text-muted-foreground">{lastUtterance}</Text>
@@ -570,16 +725,49 @@ export default function Screen() {
             </Text>
           </View>
         )}
+      </ScrollView>
 
-        {/* Everything else lives here, out of the way until asked for. */}
-        {settingsOpen ? (
-          <Animated.View entering={FadeIn.duration(180)} exiting={FadeOut.duration(120)} className="gap-5">
-            <View className="h-px bg-border" />
+      {/* Settings as a sheet over the screen, not a block appended to the end of the page. It used to
+          render below the transcript inside the ScrollView, which meant tapping the header button
+          appeared to do nothing at all — the panel opened off-screen and only a scroll to the bottom
+          revealed it. A modal puts what was tapped in front of the user, and gives Android's back
+          gesture a way to close it (onRequestClose). */}
+      <Modal
+        visible={settingsOpen}
+        animationType="slide"
+        transparent
+        statusBarTranslucent
+        onRequestClose={() => setSettingsOpen(false)}>
+        <View className="flex-1 justify-end" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          {/* Tap-outside-to-dismiss. Sibling of the sheet rather than a wrapper around it, so
+              presses inside the sheet can never bubble out and close it mid-interaction. */}
+          <Pressable
+            className="flex-1"
+            onPress={() => setSettingsOpen(false)}
+            accessibilityRole="button"
+            accessibilityLabel="Close settings"
+          />
+          <View
+            className="rounded-t-3xl bg-background"
+            style={{ maxHeight: '88%', paddingBottom: insets.bottom }}>
+            <View className="flex-row items-center justify-between border-b border-border px-5 py-4">
+              <Text className="text-lg font-bold text-foreground">Settings</Text>
+              <PressScale
+                onPress={() => setSettingsOpen(false)}
+                className="h-10 w-10 items-center justify-center rounded-full bg-secondary"
+                accessibilityRole="button"
+                accessibilityLabel="Close settings">
+                <Icon as={X} size={19} color={BRAND.navy} />
+              </PressScale>
+            </View>
 
+            <ScrollView
+              contentContainerStyle={{ padding: 20, gap: 20 }}
+              keyboardShouldPersistTaps="handled">
             <SettingsSection label="Channel">
               <ToggleRow
                 label="Manual override"
-                sub="Force who's speaking instead of auto-detecting from mic path (TRD §4.3)"
+                sub="Force who's speaking instead of auto-detecting from mic path"
                 value={manualChannelOverride}
                 onChange={setManualChannelOverride}
               />
@@ -639,14 +827,32 @@ export default function Screen() {
                       {voiceDownload.error ? (
                         <Text className="text-xs text-destructive">{voiceDownload.error}</Text>
                       ) : null}
-                      <PressScale
-                        onPress={() => voiceDownload.start(true)}
-                        className="flex-row items-center gap-2 self-start rounded-full bg-primary px-4 py-2">
-                        <Icon as={Download} size={15} color={BRAND.navy} />
-                        <Text className="text-sm font-semibold text-primary-foreground">
-                          Download Hausa voice
-                        </Text>
-                      </PressScale>
+                      <View className="flex-row flex-wrap items-center gap-2">
+                        <PressScale
+                          onPress={() => setHausaWifiOnly((v) => !v)}
+                          className={`flex-row items-center gap-1.5 rounded-full px-3 py-1.5 ${
+                            hausaWifiOnly ? 'bg-primary' : 'bg-border'
+                          }`}>
+                          <Icon
+                            as={Wifi}
+                            size={13}
+                            color={hausaWifiOnly ? BRAND.navy : undefined}
+                            className={hausaWifiOnly ? '' : 'text-foreground'}
+                          />
+                          <Text
+                            className={`text-xs font-medium ${hausaWifiOnly ? 'text-primary-foreground' : 'text-foreground'}`}>
+                            Wi-Fi only
+                          </Text>
+                        </PressScale>
+                        <PressScale
+                          onPress={() => voiceDownload.start(hausaWifiOnly)}
+                          className="flex-row items-center gap-2 self-start rounded-full bg-primary px-4 py-2">
+                          <Icon as={Download} size={15} color={BRAND.navy} />
+                          <Text className="text-sm font-semibold text-primary-foreground">
+                            Download Hausa voice
+                          </Text>
+                        </PressScale>
+                      </View>
                     </>
                   )}
                 </View>
@@ -670,17 +876,21 @@ export default function Screen() {
               </View>
             </SettingsSection>
 
-            <View className="flex-row items-center justify-between pt-1">
-              <Text className="text-xs text-muted-foreground">
-                {preparingModel ? 'Preparing offline model…' : `Provider: ${provider}`}
-              </Text>
-              <PressScale onPress={handleEndConversation} disabled={!sessionId} className="rounded-full px-4 py-2">
-                <Text className="text-sm font-medium text-destructive">End Conversation</Text>
-              </PressScale>
-            </View>
-          </Animated.View>
-        ) : null}
-      </ScrollView>
+              <View className="flex-row items-center justify-between pt-1">
+                <Text className="text-xs text-muted-foreground">
+                  {preparingModel ? 'Preparing offline model…' : `Provider: ${provider}`}
+                </Text>
+                <PressScale
+                  onPress={handleEndConversation}
+                  disabled={!sessionId}
+                  className="rounded-full px-4 py-2">
+                  <Text className="text-sm font-medium text-destructive">End Conversation</Text>
+                </PressScale>
+              </View>
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
     </>
   );
 }
@@ -788,6 +998,34 @@ function TranscriptCard({
         }}>
         {entry.translatedText}
       </Text>
+      {/* Diagnostics (TRD §1.1): the prefill/decode split is what tells you WHY a turn was slow —
+          prefill-bound (long system prompt or audio tokens) vs decode-bound (long output). */}
+      {formatLatency(entry.latencyBreakdownMs) ? (
+        <Text
+          className="mt-2 text-[10px] text-muted-foreground"
+          style={highContrast ? { color: '#555555' } : undefined}>
+          {formatLatency(entry.latencyBreakdownMs)}
+        </Text>
+      ) : null}
     </View>
   );
+}
+
+/** Compact one-liner, e.g. "3.4s · first token 1.2s · prefill 812tok @ 240/s · decode 24tok @ 9/s". */
+function formatLatency(b: Record<string, number> | undefined): string | null {
+  if (!b) return null;
+  const total = b.total ?? b.baselineProvider ?? b.mockProvider;
+  if (total == null) return null;
+  const parts = [`${(total / 1000).toFixed(1)}s`];
+  if (b.gpu != null) parts.push(b.gpu ? 'GPU' : 'CPU');
+  if (b.timeToFirstTokenMs != null) {
+    parts.push(`first token ${(b.timeToFirstTokenMs / 1000).toFixed(1)}s`);
+  }
+  if (b.prefillTokens != null) {
+    parts.push(`prefill ${b.prefillTokens}tok @ ${b.prefillTokensPerSec ?? '?'}/s`);
+  }
+  if (b.decodeTokens != null) {
+    parts.push(`decode ${b.decodeTokens}tok @ ${b.decodeTokensPerSec ?? '?'}/s`);
+  }
+  return parts.join(' · ');
 }
