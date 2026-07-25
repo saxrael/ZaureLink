@@ -1,0 +1,1577 @@
+[
+  {
+    "id": "MKT-EN-0233",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wannan ne ya shiga idona.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "This is the one that caught my eye."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0234",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "This is the one that caught my eye.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Wannan ne ya shiga idona."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0235",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Gaskiya wannan ya shiga idona.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Honestly, this one caught my eye."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0236",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Honestly, this one caught my eye.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Gaskiya wannan ya shiga idona."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0237",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wancan ya shiga idona.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "That one caught my eye."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0238",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "That one caught my eye.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Wancan ya shiga idona."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0239",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wannan jan ya shiga idona.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "This red one caught my eye."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0240",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "This red one caught my eye.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Wannan jan ya shiga idona."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0241",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Shi ya fi shiga idona.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "This one caught my eye the most."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0242",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "This one caught my eye the most.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Shi ya fi shiga idona."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0243",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "A gaskiya, shi ya shiga idona sosai.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "To be honest, this really caught my eye."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0244",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "To be honest, this really caught my eye.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "A gaskiya, shi ya shiga idona sosai."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0245",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wannan takalmin ya shiga idona.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "These shoes caught my eye."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0246",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "These shoes caught my eye.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Wannan takalmin ya shiga idona."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0247",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wannan rigar ta shiga idona.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "This shirt caught my eye."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0248",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "This shirt caught my eye.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Wannan rigar ta shiga idona."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0249",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wannan ne ya fi shiga idona a ciki.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "This is the one that caught my eye the most among them."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0250",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "This is the one that caught my eye the most among them.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Wannan ne ya fi shiga idona a ciki."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0251",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wancan karamin ya shiga idona.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "That small one caught my eye."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0252",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "That small one caught my eye.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Wancan karamin ya shiga idona."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0253",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "This is the one that caught my eye.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "This is the one that caught my eye."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0254",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wannan ne ya shiga idona.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Wannan ne ya shiga idona."
+      }
+    ],
+    "domain_tags": [
+      "general",
+      "negotiation_idiom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-019",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0255",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "One-five guda daya?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "1,500 naira for one?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0256",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "1,500 naira for one?",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "One-five guda daya?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0257",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Two-five guda daya ne?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Is it 2,500 naira for one?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0258",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Is it 2,500 naira for one?",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Two-five guda daya ne?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0259",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Four-five kowanne?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "4,500 naira each?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0260",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "4,500 naira each?",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Four-five kowanne?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0261",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Five-five guda daya?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "5,500 naira for one?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0262",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "5,500 naira for one?",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Five-five guda daya?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0263",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Seven-five guda daya?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "7,500 naira for one?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0264",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "7,500 naira for one?",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Seven-five guda daya?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0265",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Eight-five kowanne?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "8,500 naira each?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0266",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "8,500 naira each?",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Eight-five kowanne?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0267",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Haba, three-five guda daya?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Come on, 3,500 naira for one?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0268",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Come on, 3,500 naira for one?",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Haba, three-five guda daya?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0269",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Two-five guda daya kacal?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "2,500 naira for just one?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0270",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "2,500 naira for just one?",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Two-five guda daya kacal?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0271",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Six-five guda daya fa kace?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Did you say 6,500 naira for one?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0272",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Did you say 6,500 naira for one?",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Six-five guda daya fa kace?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0273",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Three-five don guda daya kadai?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "3,500 naira for only one?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0274",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "3,500 naira for only one?",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Three-five don guda daya kadai?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0275",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "1,500 naira for one?",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "1,500 naira for one?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "MKT-EN-0276",
+    "environment": "market",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Market Mode. A trader and a customer are having a live conversation. The customer requires output in English; the trader requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, resolve the following into their intended meaning rather than translating word-for-word: local currency shorthand and numeric conventions (e.g. \"dari biyar\" means 500, \"dubu biyu\" means 2,000 -- output the actual number with \"naira\"); negotiation idiom and bargaining language (e.g. \"farashi na karshe\" means \"final price,\" not literally \"my last price\"); market-specific units of measurement (e.g. \"mudu,\" \"tiya,\" \"roba\" -- translate to the nearest standard equivalent or keep the local term with a contextual gloss if no standard equivalent exists); culturally embedded greetings, blessings, and social formulas (e.g. \"Allah ya kara albarka\" -> \"May God increase your blessings\" when directed at the listener; relay unchanged when it is a formulaic greeting that both parties understand). Use the conversation so far to resolve references -- prices, items, or quantities mentioned in earlier turns -- and to keep each speaker's tone and register (formal, casual, urgent) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "One-five guda daya?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "One-five guda daya?"
+      }
+    ],
+    "domain_tags": [
+      "currency_slang"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "MKT-020",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0277",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Ina wuni. Ya zan taimaka maka",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Good afternoon. How can I help you?"
+      },
+      {
+        "role": "user",
+        "content": "Ina jin ciwon kai kuma ina son magani",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Ina jin ciwon kai kuma ina son magani"
+      },
+      {
+        "role": "user",
+        "content": "Toh, sannu fa. Tun yaushe ka fara jin ciwon kai?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Okay, sorry. Since when have you been feeling a headache?"
+      },
+      {
+        "role": "user",
+        "content": "Tun safe; kuma ina jin gajiya",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Tun safe; kuma ina jin gajiya"
+      },
+      {
+        "role": "user",
+        "content": "Na gane. Ka sha wani magani yau?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "I understand. Have you taken any medication today?"
+      },
+      {
+        "role": "user",
+        "content": "A'a, ban sha komai ba",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "A'a, ban sha komai ba"
+      }
+    ],
+    "domain_tags": [
+      "greeting",
+      "clinical_symptom"
+    ],
+    "source": "fieldwork_seed",
+    "seed_scenario_id": null,
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0278",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Ina wuni. Ya zan taimaka miki yau?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Good afternoon. How can I help you today?"
+      },
+      {
+        "role": "user",
+        "content": "I have a stomach ache, and I need medicine.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Ina jin ciwon ciki kuma ina son magani."
+      },
+      {
+        "role": "user",
+        "content": "Toh, sannu fa. Tun yaushe kika fara jin ciwon cikin?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Okay, sorry. Since when have you been feeling the stomach ache?"
+      },
+      {
+        "role": "user",
+        "content": "Tun jiya da daddare; kuma ina jin zazzabi.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Tun jiya da daddare; kuma ina jin zazzabi."
+      },
+      {
+        "role": "user",
+        "content": "Na gane. Kinyi amfani da wani magani kuwa?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "I understand. Have you used any medicine?"
+      },
+      {
+        "role": "user",
+        "content": "No, I haven't taken anything yet.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "A'a, ban sha komai ba tukuna."
+      }
+    ],
+    "domain_tags": [
+      "greeting",
+      "clinical_symptom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-001",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0279",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Sannu da zuwa. Me zan baka?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Welcome. What can I get for you?"
+      },
+      {
+        "role": "user",
+        "content": "Ina jin ciwon hakori ne.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Ina jin ciwon hakori ne."
+      },
+      {
+        "role": "user",
+        "content": "Sannu fa. Ya dade yana yi maka ciwo ne?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Sorry. Has it been hurting you for a long time?"
+      },
+      {
+        "role": "user",
+        "content": "Tun shekaranjiya, kuma ya kumbura.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Tun shekaranjiya, kuma ya kumbura."
+      },
+      {
+        "role": "user",
+        "content": "Ayya. Ka dan sha wani maganin radadi yau?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Oh no. Did you take any painkillers today?"
+      },
+      {
+        "role": "user",
+        "content": "I took Paracetamol but it didn't work.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Na sha Paracetamol amma bai yi aiki ba."
+      }
+    ],
+    "domain_tags": [
+      "greeting",
+      "clinical_symptom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-001",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0280",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Barka da yamma. Ya kake jiki?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Good evening. How are you feeling?"
+      },
+      {
+        "role": "user",
+        "content": "I have a severe cough and I need medication.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Ina yin tari mai tsanani kuma ina son magani."
+      },
+      {
+        "role": "user",
+        "content": "Sannu fa. Tun yaushe kake tarin?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Sorry. Since when have you had the cough?"
+      },
+      {
+        "role": "user",
+        "content": "Tun kwanaki biyu da suka wuce, kuma kirjina yana min ciwo.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Tun kwanaki biyu da suka wuce, kuma kirjina yana min ciwo."
+      },
+      {
+        "role": "user",
+        "content": "Na gane. Akwai maganin da ka sha ne?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "I understand. Is there any medicine you've taken?"
+      },
+      {
+        "role": "user",
+        "content": "A'a, ban sha kowane magani ba.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "A'a, ban sha kowane magani ba."
+      }
+    ],
+    "domain_tags": [
+      "greeting",
+      "clinical_symptom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-001",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0281",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Ina wuni. Me zan taimaka maka da shi?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Good afternoon. What can I help you with?"
+      },
+      {
+        "role": "user",
+        "content": "Ina jin zazzabi ne, ina son maganin malaria.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Ina jin zazzabi ne, ina son maganin malaria."
+      },
+      {
+        "role": "user",
+        "content": "Toh, sannu fa. Tun yaushe zazzabin ya fara?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Okay, sorry. Since when did the fever start?"
+      },
+      {
+        "role": "user",
+        "content": "It started this morning, and my body feels weak.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Ya fara tun da safe, kuma jikina yana min ciwo."
+      },
+      {
+        "role": "user",
+        "content": "Na gane hakan. Ka sha wani magani kafin ka zo nan?",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "I understand. Did you take any medicine before coming here?"
+      },
+      {
+        "role": "user",
+        "content": "I haven't taken anything at all.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Ban sha komai ba gaskiya."
+      }
+    ],
+    "domain_tags": [
+      "greeting",
+      "clinical_symptom"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-001",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  }
+]

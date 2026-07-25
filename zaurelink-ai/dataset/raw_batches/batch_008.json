@@ -1,0 +1,1316 @@
+[
+  {
+    "id": "CMP-EN-0335",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Sannu da zuwa",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Welcome"
+      },
+      {
+        "role": "user",
+        "content": "Yauwa, nagode",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Yauwa, nagode"
+      }
+    ],
+    "domain_tags": [
+      "greeting"
+    ],
+    "source": "fieldwork_seed",
+    "seed_scenario_id": null,
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0336",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Sannu da zuwa.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Welcome."
+      },
+      {
+        "role": "user",
+        "content": "Yauwa, mun gode sosai.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Yauwa, mun gode sosai."
+      }
+    ],
+    "domain_tags": [
+      "greeting"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-007",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0337",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Barka da zuwa.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Welcome."
+      },
+      {
+        "role": "user",
+        "content": "Yauwa, nagode.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Yauwa, nagode."
+      }
+    ],
+    "domain_tags": [
+      "greeting"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-007",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0338",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Welcome.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Sannu da zuwa."
+      },
+      {
+        "role": "user",
+        "content": "Thank you.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Thank you."
+      }
+    ],
+    "domain_tags": [
+      "greeting"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-007",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0339",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Sannu da zuwa, shigo.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Welcome, come in."
+      },
+      {
+        "role": "user",
+        "content": "Yauwa, nagode da kiran.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Yauwa, nagode da kiran."
+      }
+    ],
+    "domain_tags": [
+      "greeting"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-007",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0340",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Allah sarki.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "What a pity."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0341",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "What a pity.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Allah sarki."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0342",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Ayya, Allah sarki.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Oh dear, what a pity."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0343",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Oh dear, what a pity.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Ayya, Allah sarki."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0344",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Allah sarki, sannu fa.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Oh dear, sorry."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0345",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Oh dear, sorry.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Allah sarki, sannu fa."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0346",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Allah sarki, bawan Allah.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Oh, poor thing."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0347",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Oh, poor thing.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Allah sarki, bawan Allah."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0348",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Allah sarki, abin tausayi.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "What a pity, it's so sad."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0349",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "What a pity, it's so sad.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Allah sarki, abin tausayi."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0350",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Subhanallah, Allah sarki.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Oh my goodness, what a pity."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0351",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Oh my goodness, what a pity.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Subhanallah, Allah sarki."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0352",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "What a pity.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "What a pity."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0353",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Allah sarki.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Allah sarki."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-008",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0354",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wallahi, gaskiya ne.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Honestly, it is true."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0355",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Honestly, it is true.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Wallahi, gaskiya ne."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0356",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wallahi, haka abin yake.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Honestly, that's how it is."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0357",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Honestly, that's how it is.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Wallahi, haka abin yake."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0358",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Gaskiya ne wallahi.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "It is honestly true."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0359",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "It is honestly true.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Gaskiya ne wallahi."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0360",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wallahi, ba karya nake ba.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "I swear, I am not lying."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0361",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "I swear, I am not lying.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Wallahi, ba karya nake ba."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0362",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wallahi, dagaske ne.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Honestly, it is serious."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0363",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Honestly, it is serious.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Wallahi, dagaske ne."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0364",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Tabbas gaskiya ne, wallahi.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "It is definitely true, I swear."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0365",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "It is definitely true, I swear.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Tabbas gaskiya ne, wallahi."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0366",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Honestly, it is true.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Honestly, it is true."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0367",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Wallahi, gaskiya ne.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Wallahi, gaskiya ne."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-009",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0368",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Ka yi hakuri.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Sorry."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0369",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Sorry.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Ka yi hakuri."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0370",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Don Allah ka yi hakuri.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Please, be patient."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0371",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Please, be patient.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Don Allah ka yi hakuri."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0372",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Kiyi hakuri, don Allah.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Sorry, please."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0373",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Sorry, please.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Kiyi hakuri, don Allah."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0374",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Ka dan yi hakuri.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Please have some patience."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0375",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Please have some patience.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Ka dan yi hakuri."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0376",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Dan Allah kiyi hakuri.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Please, have patience."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0377",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Please, have patience.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Dan Allah kiyi hakuri."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0378",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Ku yi hakuri da mu.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Please bear with us."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0379",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Please bear with us.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Ku yi hakuri da mu."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0380",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Sorry.",
+        "spoken_language": "en"
+      },
+      {
+        "role": "model",
+        "content": "Sorry."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  },
+  {
+    "id": "CMP-EN-0381",
+    "environment": "campus",
+    "app_user_language": "en",
+    "conversations": [
+      {
+        "role": "system",
+        "content": "You are a translation engine operating in Campus Mode, covering all everyday interactions outside the market. A student (the app user) is having a live conversation with another party -- a driver, a chemist, a fellow student, a lecturer, administrative staff, or anyone else. The student requires output in English; the other party requires output in Hausa. Detect which language the current speaker actually used -- either party may speak Hausa or English in any turn, and may mix both within a single utterance. Apply these rules in order: 1. If the speaker's language already matches what the listener on the other end requires, relay their words accurately without altering the language -- do not translate language that doesn't need translating. 2. If it doesn't match, translate it into the listener's required language. 3. If the utterance mixes Hausa and English within a single sentence, treat the full utterance as one unit and translate the entire meaning into the listener's required language -- do not output a half-translated sentence. When translating, apply domain-appropriate resolution rather than word-for-word phrasing: transport fare amounts, route names, and vehicle references (e.g. \"Keke\" means tricycle/auto-rickshaw, \"Okada\" means motorcycle taxi -- use the local term with its meaning if no precise English equivalent exists; resolve \"dari biyu\" in a fare context to \"two hundred naira\"); clinical symptom descriptions, body-part references, medication names, and duration/severity expressions accurately (e.g. \"jikina yana zafi\" -> \"my body aches,\" not literally \"my body is hot/painful\"; preserve dosage instructions exactly -- do not paraphrase quantities, frequencies, or medication names); academic and administrative terminology (resolve course registration terms, department names, exam-related language, NYSC documentation terminology, and fee payment instructions into their standard English or Hausa equivalents as appropriate); general social formulas (handle greetings, blessings, and culturally embedded social formulas appropriately -- e.g. elaborate Hausa greeting protocols should be translated with their social intent preserved, not reduced to a single \"hello\"; relay formulaic responses like \"Alhamdulillahi\" unchanged when both parties understand them). Use the conversation so far to resolve references -- a fare, a symptom, a course name, or a document mentioned in earlier turns -- and to keep each speaker's tone and register (formal with a lecturer, casual with a peer, clinical with a chemist) consistent across turns. If a speaker's intent is genuinely ambiguous or unclear, translate your best interpretation of what was said rather than guessing at unstated meaning. Output only the translated or relayed result, nothing else -- no commentary, no explanations, no metadata."
+      },
+      {
+        "role": "user",
+        "content": "Ka yi hakuri.",
+        "spoken_language": "ha"
+      },
+      {
+        "role": "model",
+        "content": "Ka yi hakuri."
+      }
+    ],
+    "domain_tags": [
+      "general"
+    ],
+    "source": "synthetic_permutation",
+    "seed_scenario_id": "CMP-010",
+    "verified": true,
+    "verifier": "gemini_backtranslation"
+  }
+]
