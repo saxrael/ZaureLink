@@ -12,8 +12,10 @@ declare class ZaurelinkTtsModule extends NativeModule<ZaurelinkTtsModuleEvents> 
    * if it loaded. Call after the voice-model download completes + verifies. */
   setHausaVoiceModelPath(path: string): boolean;
   /** Speak text. Resolves true if speech started; false if not ready or no installed voice
-   * (caller MUST then fall back to on-screen text — NFR-06 / FR-06). */
-  speak(text: string, language: TtsLanguage): Promise<boolean>;
+   * (caller MUST then fall back to on-screen text — NFR-06 / FR-06).
+   * @param toLoudspeaker true when the audio is for the OTHER party, forcing it out of the phone
+   *   speaker instead of following media routing into the app user's Bluetooth earpiece. */
+  speak(text: string, language: TtsLanguage, toLoudspeaker: boolean): Promise<boolean>;
   stop(): void;
 }
 

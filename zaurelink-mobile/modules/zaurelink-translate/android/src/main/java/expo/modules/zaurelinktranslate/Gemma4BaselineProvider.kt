@@ -89,10 +89,19 @@ private fun campusPrompt(appUserLanguage: AppUserLanguage): String {
     """.trimIndent()
 }
 
-// Verbatim TRD §2.1a originals, retained for reference and A/B comparison against the condensed
-// prompts above. Not used at runtime.
-@Suppress("unused")
-private val SYSTEM_PROMPTS_VERBOSE: Map<Environment, Map<AppUserLanguage, String>> =
+/**
+ * The prompts the fine-tuned model was actually trained against — byte-identical to
+ * `zaurelink-ai/dataset/canonical_prompts.py`, verified by normalizing whitespace and diffing all
+ * four (2154/2154 and 2829/2829 chars), and matching the system-prompt lengths present in all 1048
+ * training records.
+ *
+ * These MUST be served to [ProviderTier.FINE_TUNED]. The condensed [SYSTEM_PROMPTS] above are a
+ * rewrite: shorter, restructured into numbered rules, and missing the explicit "Detect which
+ * language the current speaker actually used" instruction. For an untuned model that is a fair
+ * trade of tokens for latency, but a QLoRA fine-tune has weights tuned to this exact phrasing, so
+ * handing it the condensed variant is a distribution shift on the one input it is most sensitive to.
+ */
+private val SYSTEM_PROMPTS_CANONICAL: Map<Environment, Map<AppUserLanguage, String>> =
   mapOf(
     Environment.MARKET to
       mapOf(
@@ -130,7 +139,15 @@ private val SYSTEM_PROMPTS_VERBOSE: Map<Environment, Map<AppUserLanguage, String
  */
 private fun speakerTagFor(environment: Environment, activeChannel: ActiveChannel): String =
   when (activeChannel) {
-    ActiveChannel.EARPOD -> "app_user"
+    // Was "app_user", which named a role no prompt ever defines: the model was handed an entity it
+    // had never been told about and had to infer that it meant the customer/student. These names are
+    // taken from the prompt text itself so the tag resolves against something the model was actually
+    // given.
+    ActiveChannel.EARPOD ->
+      when (environment) {
+        Environment.MARKET -> "customer"
+        Environment.CAMPUS -> "student"
+      }
     ActiveChannel.PHONE_MIC ->
       when (environment) {
         Environment.MARKET -> "trader"
@@ -187,6 +204,18 @@ class Gemma4BaselineProvider(
    * produced a given timing is never a guess. */
   @Volatile private var usingGpu = false
 
+  /**
+   * Whether this .litertlm actually contains an audio tower.
+   *
+   * Not every export has one. A model built for text only fails at `createConversation` with
+   * `NOT_FOUND: TF_LITE_AUDIO_ENCODER_HW not found in the model` as soon as EngineConfig names an
+   * audioBackend — the engine loads fine, then the first conversation dies. When that happens the
+   * engine is rebuilt without the audio backend and this flips false, so the model stays usable for
+   * text instead of the whole tier being lost. [translate] then refuses audio explicitly rather than
+   * letting it fail as an opaque JNI error mid-utterance.
+   */
+  @Volatile private var supportsAudio = true
+
   @OptIn(ExperimentalApi::class)
   private fun ensureEngine(): Engine =
     engine ?: synchronized(engineLock) {
@@ -221,7 +250,11 @@ class Gemma4BaselineProvider(
    *
    * @param maxTokens context bound, or null to accept the runtime's own default (see MAX_NUM_TOKENS)
    */
-  private fun buildEngine(useGpu: Boolean, maxTokens: Int? = MAX_NUM_TOKENS): Engine? =
+  private fun buildEngine(
+    useGpu: Boolean,
+    maxTokens: Int? = MAX_NUM_TOKENS,
+    withAudio: Boolean = supportsAudio,
+  ): Engine? =
     try {
       Engine(
           EngineConfig(
@@ -236,7 +269,9 @@ class Gemma4BaselineProvider(
             // on the usual 4+4 / 1+3+4 layouts. ⚠ Heuristic — verify against the benchmark numbers
             // on a real device before treating it as tuned.
             backend = if (useGpu) Backend.GPU() else Backend.CPU(threadCount = cpuThreadCount()),
-            audioBackend = Backend.CPU(threadCount = cpuThreadCount()),
+            // Naming an audioBackend for a model with no audio tower is what produces the
+            // TF_LITE_AUDIO_ENCODER_HW failure — see [supportsAudio].
+            audioBackend = if (withAudio) Backend.CPU(threadCount = cpuThreadCount()) else null,
             cacheDir = context.cacheDir.path, // improves load time per LiteRT-LM's own guidance
           ),
         )
@@ -255,7 +290,31 @@ class Gemma4BaselineProvider(
       null
     }
 
+  /**
+   * A text-only export cannot be detected up front: `Engine.initialize()` succeeds and the failure
+   * only surfaces here, on the first `createConversation`, because that is when the audio tower is
+   * resolved. So the capability is discovered by trying, and a model missing it is downgraded to
+   * text rather than being lost entirely.
+   */
   override fun startConversation(
+    environment: Environment,
+    appUserLanguage: AppUserLanguage,
+    maxWindowTurns: Int,
+  ): ConversationSession =
+    try {
+      openConversation(environment, appUserLanguage, maxWindowTurns)
+    } catch (t: Throwable) {
+      if (!supportsAudio || !isMissingAudioEncoder(t)) throw t
+      Log.w(TAG, "Model has no audio tower — rebuilding engine for text-only use: ${t.message}")
+      supportsAudio = false
+      synchronized(engineLock) {
+        runCatching { engine?.close() }
+        engine = null
+      }
+      openConversation(environment, appUserLanguage, maxWindowTurns)
+    }
+
+  private fun openConversation(
     environment: Environment,
     appUserLanguage: AppUserLanguage,
     maxWindowTurns: Int,
@@ -278,12 +337,18 @@ class Gemma4BaselineProvider(
     // trained WITH them changes the input distribution it saw and degrades output. So this is a
     // deliberate flag answered by whoever trained it, not something to infer here.
     val sendSystemPrompt = tier != ProviderTier.FINE_TUNED || FINE_TUNED_EXPECTS_SYSTEM_PROMPT
+
+    // The fine-tune gets the exact text it was trained on; the untuned baseline gets the condensed
+    // rewrite, where trading tokens for latency costs nothing learned.
+    val prompts =
+      if (tier == ProviderTier.FINE_TUNED) SYSTEM_PROMPTS_CANONICAL else SYSTEM_PROMPTS
+
     val conversation =
       eng.createConversation(
         if (sendSystemPrompt) {
           ConversationConfig(
             systemInstruction =
-              Contents.of(SYSTEM_PROMPTS.getValue(environment).getValue(appUserLanguage)),
+              Contents.of(prompts.getValue(environment).getValue(appUserLanguage)),
             samplerConfig = sampler,
           )
         } else {
@@ -291,6 +356,16 @@ class Gemma4BaselineProvider(
         },
       )
     return BaselineSession(environment, appUserLanguage, maxWindowTurns, conversation)
+  }
+
+  /** Releases the native Engine and its multi-GB allocation. Must be called before dropping a
+   * reference to this provider — two resident engines is >5GB of weights, which the low-memory
+   * killer resolves on the target hardware by killing the app. */
+  fun close() {
+    synchronized(engineLock) {
+      runCatching { engine?.close() }
+      engine = null
+    }
   }
 
   override suspend fun translate(
@@ -305,13 +380,30 @@ class Gemma4BaselineProvider(
     // TRD §2.1b: prefix with who's speaking rather than a target-language hint — the system
     // prompt's own rules 1-3 already fully specify how to derive the required output language
     // from the speaker tag + which role needs what, so a separate hint here is redundant.
-    val tag = speakerTagFor(baseline.environment, activeChannel)
+    // Baseline-only. Every one of the 1048 fine-tuning records presents the utterance bare, with no
+    // speaker prefix, so prefixing one for the fine-tuned model is a distribution shift on its most
+    // sensitive input. It keeps its bearings from the prompt's role definitions plus the language
+    // actually spoken, which is exactly what it was trained to do.
+    val prefix =
+      if (tier == ProviderTier.FINE_TUNED) {
+        ""
+      } else {
+        "${speakerTagFor(baseline.environment, activeChannel)}: "
+      }
 
     val contents =
       when {
-        textOverride != null -> Contents.of(Content.Text("$tag: $textOverride"))
-        audioPcm16kMono != null ->
-          Contents.of(Content.Text("$tag:"), Content.AudioBytes(pcm16ToWavBytes(audioPcm16kMono)))
+        textOverride != null -> Contents.of(Content.Text("$prefix$textOverride"))
+        audioPcm16kMono != null -> {
+          if (!supportsAudio) {
+            throw IllegalStateException(
+              "This model was exported without an audio encoder, so speech input is unavailable. " +
+                "Type what was said instead, or use the baseline model.",
+            )
+          }
+          val wav = Content.AudioBytes(pcm16ToWavBytes(audioPcm16kMono))
+          if (prefix.isEmpty()) Contents.of(wav) else Contents.of(Content.Text(prefix.trimEnd()), wav)
+        }
         else -> throw IllegalArgumentException("translate() requires audioPcm16kMono or textOverride")
       }
 
@@ -320,10 +412,9 @@ class Gemma4BaselineProvider(
     // simpler blocking API is the correct match — this coroutine is already off the main thread.
     val response = baseline.conversation.sendMessage(contents)
     val translatedText =
-      response.contents.contents
-        .filterIsInstance<Content.Text>()
-        .joinToString("") { it.text }
-        .trim()
+      stripReasoning(
+        response.contents.contents.filterIsInstance<Content.Text>().joinToString("") { it.text }
+      )
 
     return TranslationResultRecord(
       translatedText = translatedText,
@@ -364,6 +455,34 @@ class Gemma4BaselineProvider(
 
 private const val TAG = "ZaurelinkGemma"
 
+private val THINK_BLOCK =
+  Regex("<(think|thought)>.*?</\\1>", setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE))
+private val THINK_OPEN = Regex("<(think|thought)>", RegexOption.IGNORE_CASE)
+
+/**
+ * Removes Gemma reasoning blocks before the text is shown or spoken.
+ *
+ * Without this, a model that reasons before answering has its entire chain of thought rendered into
+ * the transcript AND read aloud by TTS — in a market, over a loudspeaker, in place of the
+ * translation. The prompt already says to output only the result, but a prompt is a request, not a
+ * guarantee, and this is the one place where ignoring it is loudly visible to a bystander.
+ *
+ * The unterminated case is handled deliberately: if generation stops mid-thought there is no closing
+ * tag, so everything from the opening tag on is reasoning and is dropped. Returning the partial
+ * thought would be worse than returning nothing.
+ */
+private fun stripReasoning(raw: String): String {
+  val closed = THINK_BLOCK.replace(raw, "")
+  val dangling = THINK_OPEN.find(closed)
+  return (if (dangling != null) closed.substring(0, dangling.range.first) else closed).trim()
+}
+
+/** Matches the LiteRT-LM failure a text-only export produces once an audioBackend is configured. */
+private fun isMissingAudioEncoder(t: Throwable): Boolean =
+  generateSequence(t) { it.cause }.any {
+    it.message?.contains("AUDIO_ENCODER", ignoreCase = true) == true
+  }
+
 /**
  * Whether to attempt the GPU delegate before falling back to CPU.
  *
@@ -400,17 +519,17 @@ private const val PREFER_GPU = false
 private const val MAX_NUM_TOKENS = 4096
 
 /**
- * Whether the fine-tuned artifact still expects the TRD §2.1a system prompts in its input.
+ * Whether the fine-tuned artifact expects a system prompt in its input.
  *
- * TRUE is the conservative default and is deliberately NOT a guess about the training data: sending
- * the prompts to a model that no longer needs them costs latency, whereas withholding them from a
- * model that was trained with them corrupts output. Of the two ways to be wrong, only one produces
- * bad translations, so the default takes the slow-but-correct side.
+ * TRUE, and this is now settled by the training data rather than assumed: every one of the 1048
+ * records in `zaurelink_training_data.jsonl` carries a system turn (1048 system / 1308 user / 1308
+ * model), and their system-prompt lengths are exactly the two canonical sizes, 2154 and 2829 chars.
+ * The model has never seen an input without one.
  *
- * Flip to false ONLY on confirmation from whoever trained it that the training inputs contained no
- * system instruction (i.e. the model saw bare `speaker_tag: utterance`). Doing so removes ~370-454
- * prefill tokens from the first turn of every session, which is the largest remaining latency win
- * available — worth asking the question explicitly rather than leaving it at the safe default.
+ * So dropping the prompt is NOT an available latency win, despite being the largest one on paper:
+ * it would put the model outside its training distribution on every single turn. Leave this true.
+ * The prompt cost is reduced instead by the condensed [SYSTEM_PROMPTS] on the untuned baseline,
+ * where no training expectation exists to violate.
  */
 private const val FINE_TUNED_EXPECTS_SYSTEM_PROMPT = true
 

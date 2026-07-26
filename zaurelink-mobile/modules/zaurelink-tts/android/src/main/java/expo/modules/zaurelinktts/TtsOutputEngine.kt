@@ -1,6 +1,8 @@
 package expo.modules.zaurelinktts
 
 import android.content.Context
+import android.media.AudioManager
+import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import expo.modules.kotlin.types.Enumerable
@@ -30,8 +32,14 @@ interface TtsOutputEngine {
   /** True if the eSpeak NG TTS engine app is installed as a system engine (guarantees Hausa). */
   fun isEspeakInstalled(): Boolean
 
-  /** Returns true if speech started; false if not ready or the language has no installed voice. */
-  fun speak(text: String, language: TtsLanguage): Boolean
+  /**
+   * Returns true if speech started; false if not ready or the language has no installed voice.
+   *
+   * @param toLoudspeaker route out of the phone's built-in speaker rather than following the system
+   *   default. This is what keeps the two sides of the conversation on their own channels: audio for
+   *   the other party must not follow media routing into the app user's Bluetooth earpiece.
+   */
+  fun speak(text: String, language: TtsLanguage, toLoudspeaker: Boolean = false): Boolean
 
   fun stop()
 
@@ -124,7 +132,7 @@ class SystemTtsEngine(
     (espeakReady && espeakTts?.let { hasLang(it, language) } == true) ||
       (defaultReady && hasLang(defaultTts, language))
 
-  override fun speak(text: String, language: TtsLanguage): Boolean {
+  override fun speak(text: String, language: TtsLanguage, toLoudspeaker: Boolean): Boolean {
     // Hausa prefers the eSpeak engine (guaranteed voice); English (and any Hausa fallback) uses the
     // default engine, keeping natural English while still getting Hausa when eSpeak is present.
     val useEspeak =
@@ -134,7 +142,19 @@ class SystemTtsEngine(
     if (!hasLang(engine, language)) return false
     engine.language = localeFor(language)
     val id = "tts-${++counter}"
-    return engine.speak(text, TextToSpeech.QUEUE_FLUSH, null, id) == TextToSpeech.SUCCESS
+    // Passing null params defaulted this to STREAM_MUSIC, which follows Bluetooth exactly like the
+    // MMS path did. TextToSpeech exposes no per-utterance device selection, so the stream itself is
+    // declared as guidance audio, which the platform keeps on the device speaker while a call-style
+    // SCO link holds the private channel.
+    val params =
+      Bundle().apply {
+        putInt(
+          TextToSpeech.Engine.KEY_PARAM_STREAM,
+          if (toLoudspeaker) AudioManager.STREAM_NOTIFICATION else AudioManager.STREAM_MUSIC,
+        )
+        putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, id)
+      }
+    return engine.speak(text, TextToSpeech.QUEUE_FLUSH, params, id) == TextToSpeech.SUCCESS
   }
 
   override fun stop() {

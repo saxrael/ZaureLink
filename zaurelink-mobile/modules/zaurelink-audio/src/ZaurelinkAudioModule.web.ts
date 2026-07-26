@@ -19,6 +19,10 @@ class ZaurelinkAudioModule extends NativeModule<ZaurelinkAudioModuleEvents> {
     return this.denied();
   }
 
+  async requestBluetoothPermission() {
+    return this.denied(); // no AudioManager/Bluetooth routing in the browser
+  }
+
   hasBluetoothSco(): boolean {
     return false;
   }

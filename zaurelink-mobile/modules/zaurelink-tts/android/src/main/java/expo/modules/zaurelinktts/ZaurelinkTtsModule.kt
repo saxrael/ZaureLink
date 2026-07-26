@@ -49,7 +49,9 @@ class ZaurelinkTtsModule : Module() {
         mmsEngine?.release()
         mmsEngine =
           try {
-            MmsHausaTtsEngine(path.removePrefix("file://")) { name, body -> sendEvent(name, body) }
+            MmsHausaTtsEngine(context, path.removePrefix("file://")) { name, body ->
+              sendEvent(name, body)
+            }
           } catch (t: Throwable) {
             null
           }
@@ -64,12 +66,26 @@ class ZaurelinkTtsModule : Module() {
         }
       }
 
-      AsyncFunction("speak") { text: String, language: TtsLanguage ->
+      /**
+       * @param toLoudspeaker true when this translation is FOR THE OTHER PARTY, so it must come out
+       *   of the phone's speaker rather than following media routing into the app user's earpiece.
+       *   Without it the private and public sides of the conversation collapse onto one channel and
+       *   the person being translated for hears nothing.
+       */
+      AsyncFunction("speak") { text: String, language: TtsLanguage, toLoudspeaker: Boolean ->
         when (language) {
           // Hausa → MMS voice if loaded, else whatever the system offers (usually nothing → text).
-          TtsLanguage.HAUSA ->
-            mmsEngine?.speak(text) ?: (systemEngine?.speak(text, TtsLanguage.HAUSA) ?: false)
-          TtsLanguage.ENGLISH -> systemEngine?.speak(text, TtsLanguage.ENGLISH) ?: false
+          // The elvis operator cannot express this: MmsHausaTtsEngine.speak returns a non-null
+          // Boolean, so `mms?.speak(t) ?: system…` only reached the fallback when the ENGINE was
+          // absent — never when a loaded engine failed to produce speakable tokens. That is the
+          // common case (text that reduces to nothing in the vocab), and it silently swallowed the
+          // utterance instead of falling back.
+          TtsLanguage.HAUSA -> {
+            val spoken = mmsEngine?.speak(text, toLoudspeaker) == true
+            spoken || systemEngine?.speak(text, TtsLanguage.HAUSA, toLoudspeaker) == true
+          }
+          TtsLanguage.ENGLISH ->
+            systemEngine?.speak(text, TtsLanguage.ENGLISH, toLoudspeaker) == true
         }
       }
 
