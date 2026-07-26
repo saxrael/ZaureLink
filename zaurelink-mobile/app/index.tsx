@@ -32,6 +32,7 @@ import {
   ArrowRight,
   BluetoothOff,
   Download,
+  Repeat2,
   Send,
   Settings2,
   Sun,
@@ -132,12 +133,16 @@ export default function Screen() {
   appUserLanguageRef.current = appUserLanguage;
 
   // TRD §2.1: ActiveChannel resolved from the live routing state, unless manually forced (§4.3).
-  // 'disconnected' has no mic active — fall back to phone_mic (matches the pre-connect default).
-  const resolvedChannel: ActiveChannel = manualChannelOverride
-    ? manualChannel
-    : routing === 'earpod_mic'
-      ? 'earpod'
-      : 'phone_mic';
+  //
+  // The unforced default is 'earpod' — "the app user is speaking" — and that is a deliberate
+  // reversal of the previous 'phone_mic'. A single phone carries no signal about who is talking, and
+  // attributing every utterance to the OTHER party meant an app user speaking their own language hit
+  // FR-13 pass-through and got their own words back untranslated. That is indistinguishable from a
+  // broken app, and it was the default path for anyone without a Bluetooth earpiece — which, given
+  // the earpiece was undetectable, was everyone. Whoever is holding the phone and pressing the mic
+  // is overwhelmingly the app user, so that is the better assumption; the speaker chip under the orb
+  // flips it in one tap for the other party's reply.
+  const resolvedChannel: ActiveChannel = manualChannelOverride ? manualChannel : 'earpod';
   const resolvedChannelRef = React.useRef(resolvedChannel);
   resolvedChannelRef.current = resolvedChannel;
 
@@ -156,6 +161,13 @@ export default function Screen() {
   const nextOutputLanguage = requiredOutputLanguage(appUserLanguage, resolvedChannel);
   const nextSpeakerLabel =
     resolvedChannel === 'earpod' ? 'You' : environment === 'market' ? 'Trader' : 'Other party';
+
+  /** Flips who the next turn is attributed to. Engages the manual override implicitly — a user
+   * tapping this has just told us who is speaking, which is exactly what the override means. */
+  const handleSwapSpeaker = () => {
+    setManualChannel(resolvedChannel === 'earpod' ? 'phone_mic' : 'earpod');
+    setManualChannelOverride(true);
+  };
 
   // FR-09 inactivity timeout: reset the conversation (clears bounded memory/context, PRD §3.5)
   // after a stretch with no speech or translation. Any activity bumps the timer.
@@ -201,8 +213,13 @@ export default function Screen() {
         ]);
         // Speech-to-speech: speak the translation. On-screen text always stays as the failsafe
         // (NFR-06 / FR-06), so a missing voice (e.g. no Hausa engine) never blocks the result.
+        // The output goes to whoever did NOT just speak: if the app user spoke into the earpiece,
+        // this translation is for the other party and must leave the phone's loudspeaker, not
+        // follow media routing back into the user's own ear where only they would hear it.
         if (speakEnabledRef.current) {
-          ZaurelinkTts.speak(result.translatedText, outputLanguage).catch(() => {});
+          ZaurelinkTts.speak(result.translatedText, outputLanguage, activeChannel === 'earpod').catch(
+            () => {}
+          );
         }
       } catch (e) {
         setLastUtterance(`Translate failed: ${String(e)}`);
@@ -440,15 +457,30 @@ export default function Screen() {
     return true;
   };
 
+  // BLUETOOTH_CONNECT (API 31+) gates device ENUMERATION, so without it a paired earpiece is
+  // invisible and the app silently stays on the public channel. Asked once, and never allowed to
+  // block capture: refusing it costs the private channel, not the app.
+  const btPermissionAskedRef = React.useRef(false);
+  const ensureBluetoothPermission = async () => {
+    if (btPermissionAskedRef.current || Platform.OS === 'web') return;
+    btPermissionAskedRef.current = true;
+    await ZaurelinkAudio.requestBluetoothPermission().catch(() => {});
+  };
+
   const beginCapture = async () => {
     setBtDisconnected(false);
     if (!(await ensureMicPermission())) return;
+    await ensureBluetoothPermission();
     bumpActivity();
     // FR-08: warn (don't block) on low battery before an inference session.
     const battery = await checkBattery();
     if (!battery.ok) setLastUtterance(battery.message);
     try {
-      await ZaurelinkAudio.startCapture(false); // phone mic/speaker by default until BT is exercised
+      // Prefer the private earpiece channel (TRD §4.1). This was hardcoded false, which meant the
+      // Bluetooth path was unreachable no matter what hardware was paired — native never even got
+      // as far as asking whether an earpiece existed. Native falls back to the phone mic/speaker on
+      // its own when there is no voice-capable device, so requesting it is always safe.
+      await ZaurelinkAudio.startCapture(true);
       setIsCapturing(true);
     } catch (e) {
       setLastUtterance(`Could not start mic: ${String(e)}`);
@@ -524,7 +556,12 @@ export default function Screen() {
   };
 
   const handleReplay = (entry: TranscriptEntry) => {
-    ZaurelinkTts.speak(entry.translatedText, entry.outputLanguage).catch(() => {});
+    // Replay reuses the turn's own channel so it lands on the same speaker it originally did.
+    ZaurelinkTts.speak(
+      entry.translatedText,
+      entry.outputLanguage,
+      entry.activeChannel === 'earpod'
+    ).catch(() => {});
   };
 
   const cycleTextScale = () => {
@@ -668,15 +705,24 @@ export default function Screen() {
             onPress={handleMicToggle}
           />
           <VoiceWave level={levelSV} mode={waveMode} />
-          {/* Makes the per-turn routing visible: who the app thinks is speaking, and which
-              language the answer will come back in. */}
-          <View className="flex-row items-center gap-1.5 rounded-full bg-muted px-3 py-1.5">
+          {/* Who the app thinks is speaking, and which language the answer comes back in — and the
+              control for it, not just a readout. On one phone nothing can detect which side is
+              talking, so this has to be a one-tap flip sitting next to the mic; leaving it as the
+              "Manual override" switch inside Settings meant the single most important control in
+              the single-phone case was three taps deep behind a name that gives no clue it decides
+              translation direction. */}
+          <PressScale
+            onPress={handleSwapSpeaker}
+            accessibilityRole="button"
+            accessibilityLabel={`Speaking: ${nextSpeakerLabel}. Tap to switch speaker.`}
+            className="flex-row items-center gap-1.5 rounded-full bg-muted px-3 py-1.5">
+            <Icon as={Repeat2} size={12} className="text-muted-foreground" />
             <Text className="text-xs font-medium text-muted-foreground">{nextSpeakerLabel}</Text>
             <Icon as={ArrowRight} size={12} className="text-muted-foreground" />
             <Text className="text-xs font-semibold capitalize text-foreground">
               {nextOutputLanguage}
             </Text>
-          </View>
+          </PressScale>
           <Text className="text-center text-base font-medium text-foreground">{heroCaption}</Text>
           {lastUtterance ? (
             <Text className="text-center text-xs text-muted-foreground">{lastUtterance}</Text>

@@ -61,10 +61,34 @@ class ZaurelinkTranslateModule : Module() {
           ))
         .removePrefix("file://")
     if (gemmaProviders[target] == null || gemmaModelPaths[target] != path) {
+      releaseGemmaTier(target) // a replaced provider still owns a multi-GB Engine
       gemmaProviders[target] = Gemma4BaselineProvider(context, path, target)
       gemmaModelPaths[target] = path
     }
+
+    // Only one Gemma engine may stay resident. Each holds ~2.6GB of weights, so keeping the previous
+    // tier warm to make switching back cheap would mean >5GB live on a device whose floor is 4-6GB
+    // total (NFR-07) — the low-memory killer resolves that by killing the app mid-conversation.
+    gemmaProviders.keys.filter { it != target }.forEach(::releaseGemmaTier)
     return target
+  }
+
+  /**
+   * Ends every session owned by a tier's provider, then releases its Engine.
+   *
+   * Order matters and is not defensive style: a Conversation outliving the Engine that created it is
+   * a native use-after-free, not a Kotlin exception something upstream could catch. This runs from
+   * setProvider, which JS calls BEFORE it ends the outgoing session, so the stale sessions are
+   * genuinely still in the map at this point rather than hypothetically.
+   */
+  private fun releaseGemmaTier(t: ProviderTier) {
+    val provider = gemmaProviders.remove(t) ?: return
+    gemmaModelPaths.remove(t)
+    sessions.entries
+      .filter { it.value.first === provider }
+      .map { it.key }
+      .forEach { id -> sessions.remove(id)?.let { (p, s) -> runCatching { p.endConversation(s) } } }
+    provider.close()
   }
 
   private fun providerFor(t: ProviderTier): TranslationProvider =
@@ -151,5 +175,9 @@ class ZaurelinkTranslateModule : Module() {
         entry?.let { (provider, session) -> provider.endConversation(session) }
         Unit
       }
+
+      // Without this the Engine's native allocation outlives the module — the JVM side is collected
+      // but the ~2.6GB of mapped weights is not.
+      OnDestroy { gemmaProviders.keys.toList().forEach(::releaseGemmaTier) }
     }
 }

@@ -21,7 +21,9 @@ class ZaurelinkTtsModule extends NativeModule<ZaurelinkTtsModuleEvents> {
     return false; // no on-device ONNX voice on web
   }
 
-  async speak(text: string, language: TtsLanguage): Promise<boolean> {
+  // _toLoudspeaker is accepted for signature parity only: the browser has no concept of routing to a
+  // specific output device, and the dual-channel scenario it exists for is Android-only.
+  async speak(text: string, language: TtsLanguage, _toLoudspeaker = false): Promise<boolean> {
     const synth = this.synth;
     if (!synth) return false;
     const utterance = new SpeechSynthesisUtterance(text);

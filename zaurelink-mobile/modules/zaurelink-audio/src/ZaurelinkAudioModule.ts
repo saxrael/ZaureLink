@@ -11,6 +11,10 @@ import type {
 declare class ZaurelinkAudioModule extends NativeModule<ZaurelinkAudioModuleEvents> {
   getRecordingPermission(): Promise<PermissionResponse>;
   requestRecordingPermission(): Promise<PermissionResponse>;
+  /** BLUETOOTH_CONNECT (API 31+). Required to enumerate audio devices at all — without it a paired
+   * earpiece is invisible. Requested separately from the mic so denying it never reports the
+   * microphone as denied; the app stays fully usable on the phone's own mic and speaker. */
+  requestBluetoothPermission(): Promise<PermissionResponse>;
   /** True if a Bluetooth SCO output device is currently available for the private channel. */
   hasBluetoothSco(): boolean;
   getRoutingState(): RoutingState;

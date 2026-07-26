@@ -3,9 +3,13 @@ package expo.modules.zaurelinktts
 import ai.onnxruntime.OnnxTensor
 import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
+import android.content.Context
 import android.media.AudioAttributes
+import android.media.AudioDeviceInfo
 import android.media.AudioFormat
+import android.media.AudioManager
 import android.media.AudioTrack
+import android.util.Log
 import java.io.File
 import java.nio.FloatBuffer
 import java.nio.LongBuffer
@@ -28,12 +32,17 @@ import java.util.concurrent.Executors
  * and degrades to text (NFR-06), exactly like a missing system voice.
  */
 class MmsHausaTtsEngine(
+  context: Context,
   modelPath: String,
   private val onEvent: (String, Map<String, Any?>) -> Unit,
 ) {
   private val env: OrtEnvironment = OrtEnvironment.getEnvironment()
   private val session: OrtSession
   private val executor = Executors.newSingleThreadExecutor()
+  private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+  /** Guards the handoff of AudioTrack ownership between the caller's thread and the play thread. */
+  private val trackLock = Any()
 
   @Volatile private var currentTrack: AudioTrack? = null
   private var counter = 0L
@@ -44,17 +53,26 @@ class MmsHausaTtsEngine(
     session = env.createSession(modelPath, OrtSession.SessionOptions())
   }
 
-  /** Synthesize + play on a background thread. Returns true if there was speakable text to say. */
-  fun speak(text: String): Boolean {
+  /**
+   * Synthesize + play on a background thread. Returns true if there was speakable text to say.
+   *
+   * @param toLoudspeaker forces playback out of the phone's built-in speaker instead of following
+   *   Android's default routing. Required whenever this audio is meant for the OTHER party: with a
+   *   Bluetooth earpiece attached, the system sends all media audio to it, so the translation
+   *   intended for the person standing in front of the phone plays privately into the app user's ear
+   *   and the other party hears nothing at all.
+   */
+  fun speak(text: String, toLoudspeaker: Boolean = false): Boolean {
     val tokens = tokenize(text)
     if (tokens.isEmpty()) return false
     val id = "mms-${++counter}"
     executor.submit {
       try {
         onEvent("onTtsStart", mapOf("id" to id))
-        play(synthesize(tokens))
+        play(synthesize(tokens), toLoudspeaker)
         onEvent("onTtsDone", mapOf("id" to id))
       } catch (t: Throwable) {
+        Log.w(TAG, "MMS synthesis/playback failed: ${t.message}")
         onEvent("onTtsError", mapOf("id" to id))
       }
     }
@@ -97,7 +115,7 @@ class MmsHausaTtsEngine(
     }
   }
 
-  private fun play(pcm: ShortArray) {
+  private fun play(pcm: ShortArray, toLoudspeaker: Boolean) {
     stopCurrent()
     val minBuf =
       AudioTrack.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT)
@@ -105,7 +123,16 @@ class MmsHausaTtsEngine(
       AudioTrack.Builder()
         .setAudioAttributes(
           AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_MEDIA)
+            // USAGE_MEDIA follows the system's media route, which lands on a connected Bluetooth
+            // sink. For the public side of the conversation that is exactly wrong, so it is declared
+            // as guidance audio, which setPreferredDevice below can then pin to the built-in speaker.
+            .setUsage(
+              if (toLoudspeaker) {
+                AudioAttributes.USAGE_ASSISTANCE_NAVIGATION_GUIDANCE
+              } else {
+                AudioAttributes.USAGE_MEDIA
+              }
+            )
             .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
             .build()
         )
@@ -119,30 +146,77 @@ class MmsHausaTtsEngine(
         .setBufferSizeInBytes(maxOf(minBuf, pcm.size * 2))
         .setTransferMode(AudioTrack.MODE_STREAM)
         .build()
-    currentTrack = track
-    track.play()
 
-    var offset = 0
-    while (offset < pcm.size) {
-      val written = track.write(pcm, offset, pcm.size - offset)
-      if (written <= 0) break
-      offset += written
-    }
-    // Let the buffered audio drain before releasing, unless a newer utterance replaced us.
-    while (currentTrack === track &&
-      track.playState == AudioTrack.PLAYSTATE_PLAYING &&
-      track.playbackHeadPosition < pcm.size) {
-      Thread.sleep(20)
-    }
-    if (currentTrack === track) {
+    if (toLoudspeaker) forceBuiltinSpeaker(track)
+
+    // This thread owns `track` for its whole lifetime and is the ONLY thread that releases it.
+    // Previously stop() released from the caller's thread while this one was still inside
+    // track.write(), which is a use-after-release in native AudioTrack — an app-level crash no
+    // Kotlin catch would see. stop() now only pauses/flushes, which is safe against a live track.
+    try {
+      synchronized(trackLock) { currentTrack = track }
+      track.play()
+
+      var offset = 0
+      while (offset < pcm.size) {
+        val written = track.write(pcm, offset, pcm.size - offset)
+        if (written <= 0) break
+        offset += written
+      }
+
+      // Let the buffered audio drain, unless a newer utterance replaced us.
+      // The deadline is not belt-and-braces: playbackHeadPosition is a 32-bit wrapping counter that
+      // on some HALs sits at 0 until hardware buffers start draining, so the position test alone can
+      // never become false and this loop would pin the single TTS thread forever, silently ending
+      // all future speech. Bound it by how long the audio actually is, plus slack.
+      val deadline = System.currentTimeMillis() + (pcm.size * 1000L / SAMPLE_RATE) + DRAIN_SLACK_MS
+      while (currentTrack === track &&
+        track.playState == AudioTrack.PLAYSTATE_PLAYING &&
+        track.playbackHeadPosition < pcm.size &&
+        System.currentTimeMillis() < deadline) {
+        Thread.sleep(20)
+      }
+    } finally {
+      synchronized(trackLock) { if (currentTrack === track) currentTrack = null }
       releaseTrack(track)
-      currentTrack = null
     }
   }
 
+  /**
+   * Pins output to the phone's own speaker so the other party hears it.
+   *
+   * setPreferredDevice is the only mechanism that overrides Bluetooth routing for a specific
+   * AudioTrack without disturbing global audio state — flipping isSpeakerphoneOn would fight the
+   * capture side's routing, which is simultaneously trying to hold the private channel open.
+   */
+  private fun forceBuiltinSpeaker(track: AudioTrack) {
+    try {
+      val speaker =
+        audioManager
+          .getDevices(AudioManager.GET_DEVICES_OUTPUTS)
+          .firstOrNull { it.type == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER }
+      if (speaker == null) {
+        Log.w(TAG, "No built-in speaker reported; output may follow Bluetooth")
+      } else if (!track.setPreferredDevice(speaker)) {
+        Log.w(TAG, "setPreferredDevice(builtin speaker) refused; output may follow Bluetooth")
+      }
+    } catch (t: Throwable) {
+      Log.w(TAG, "Could not pin output to the built-in speaker: ${t.message}")
+    }
+  }
+
+  /** Silences the current utterance without releasing it — the play thread owns the release. */
   private fun stopCurrent() {
-    currentTrack?.let { releaseTrack(it) }
-    currentTrack = null
+    synchronized(trackLock) {
+      currentTrack?.let {
+        try {
+          it.pause()
+          it.flush()
+        } catch (_: Exception) {
+        }
+      }
+      currentTrack = null
+    }
   }
 
   private fun releaseTrack(track: AudioTrack) {
@@ -152,7 +226,10 @@ class MmsHausaTtsEngine(
       track.stop()
     } catch (_: Exception) {
     }
-    track.release()
+    try {
+      track.release()
+    } catch (_: Exception) {
+    }
   }
 
   fun stop() = stopCurrent()
@@ -166,10 +243,11 @@ class MmsHausaTtsEngine(
     }
   }
 
-  /** facebook/mms-tts-hau tokenization: case-fold, keep only vocab chars, map to ids, then
-   * intersperse the blank/pad id (0) → [0, t1, 0, …, 0, tn, 0]. Matches HF VitsTokenizer add_blank. */
+  /** facebook/mms-tts-hau tokenization: expand digits to words, case-fold, keep only vocab chars,
+   * map to ids, then intersperse the blank/pad id (0) → [0, t1, 0, …, 0, tn, 0]. Matches HF
+   * VitsTokenizer add_blank. */
   private fun tokenize(text: String): LongArray {
-    val lower = text.lowercase()
+    val lower = spellOutNumbers(text).lowercase()
     val ids = ArrayList<Int>(lower.length)
     for (ch in lower) VOCAB[ch]?.let { ids.add(it) }
     if (ids.isEmpty()) return LongArray(0)
@@ -183,8 +261,14 @@ class MmsHausaTtsEngine(
     private const val NOISE_SCALE = 0.667f // VITS config defaults
     private const val NOISE_SCALE_W = 0.8f
     private const val LENGTH_SCALE = 1.0f // 1/speaking_rate; >1 slower, <1 faster
+    private const val DRAIN_SLACK_MS = 2000L
+    private const val TAG = "ZaurelinkMmsTts"
 
-    // facebook/mms-tts-hau vocab.json (34 entries). Blank/pad = id 0 (coincides with 'd', as in MMS).
+    // facebook/mms-tts-hau vocab.json (34 entries), transcribed verbatim from the published file.
+    // 'd' really is id 0 and really does coincide with the pad/blank id: the model's own
+    // tokenizer_config.json declares "pad_token": "d", so HuggingFace's VitsTokenizer produces the
+    // exact same collision. It is a property of the upstream model, not a transcription slip —
+    // giving 'd' a distinct id here would desynchronise us from the weights.
     private val VOCAB: Map<Char, Int> =
       mapOf(
         ' ' to 33, '\'' to 26, '-' to 20, '6' to 21, '_' to 1,
@@ -193,5 +277,53 @@ class MmsHausaTtsEngine(
         's' to 3, 't' to 5, 'u' to 10, 'w' to 27, 'y' to 7, 'z' to 29,
         'ā' to 11, 'ă' to 25, 'ū' to 13, 'ƙ' to 31, 'ɓ' to 18, 'ɗ' to 2, 'ˈ' to 32,
       )
+
+    private val NUMBER = Regex("\\d[\\d,]*")
+
+    private val ONES =
+      arrayOf("sifili", "ɗaya", "biyu", "uku", "huɗu", "biyar", "shida", "bakwai", "takwas", "tara")
+    private val TENS =
+      arrayOf(
+        "", "goma", "ashirin", "talatin", "arba'in",
+        "hamsin", "sittin", "saba'in", "tamanin", "casa'in",
+      )
+
+    /**
+     * Replaces digit runs with Hausa number words before tokenization.
+     *
+     * The vocab contains exactly one digit — '6' — so every other numeral is silently dropped by the
+     * char filter. That is not cosmetic: the system prompt explicitly instructs Gemma to resolve
+     * currency into figures ("dari biyar" -> "500 naira"), so in Market Mode the price is the part
+     * most likely to be a numeral, and "500 naira" was being spoken as " naira". A trader hearing
+     * the unit but never the amount is worse than no audio at all.
+     */
+    internal fun spellOutNumbers(text: String): String =
+      NUMBER.replace(text) { m ->
+        val digits = m.value.replace(",", "")
+        digits.toLongOrNull()?.let { hausaNumber(it) } ?: digits.map { d ->
+          ONES.getOrElse(d - '0') { d.toString() }
+        }.joinToString(" ")
+      }
+
+    /** Hausa cardinals. Beyond a million, reading digit-by-digit is likelier to be understood than
+     * an invented compound, and no market or fare figure reaches that range anyway. */
+    internal fun hausaNumber(n: Long): String =
+      when {
+        n < 0 -> "korau ${hausaNumber(-n)}"
+        n < 10 -> ONES[n.toInt()]
+        n < 20 -> if (n == 10L) TENS[1] else "${TENS[1]} sha ${ONES[(n % 10).toInt()]}"
+        n < 100 -> joinRemainder(TENS[(n / 10).toInt()], n % 10)
+        n < 1_000 -> joinRemainder(unitPhrase("ɗari", n / 100), n % 100)
+        n < 1_000_000 -> joinRemainder(unitPhrase("dubu", n / 1_000), n % 1_000)
+        n < 1_000_000_000 -> joinRemainder(unitPhrase("miliyan", n / 1_000_000), n % 1_000_000)
+        else -> n.toString().map { ONES[it - '0'] }.joinToString(" ")
+      }
+
+    /** "ɗari" for exactly one hundred, "ɗari biyu" for two — Hausa omits the multiplier at one. */
+    private fun unitPhrase(unit: String, count: Long): String =
+      if (count == 1L) unit else "$unit ${hausaNumber(count)}"
+
+    private fun joinRemainder(head: String, remainder: Long): String =
+      if (remainder == 0L) head else "$head da ${hausaNumber(remainder)}"
   }
 }

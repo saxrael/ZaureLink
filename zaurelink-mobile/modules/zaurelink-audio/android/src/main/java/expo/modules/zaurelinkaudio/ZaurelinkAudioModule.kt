@@ -2,6 +2,7 @@ package expo.modules.zaurelinkaudio
 
 import android.Manifest
 import android.content.Context
+import android.os.Build
 import expo.modules.interfaces.permissions.Permissions
 import expo.modules.kotlin.Promise
 import expo.modules.kotlin.exception.Exceptions
@@ -46,6 +47,35 @@ class ZaurelinkAudioModule : Module() {
         )
       }
 
+      /**
+       * BLUETOOTH_CONNECT (API 31+) is requested separately from RECORD_AUDIO, deliberately.
+       *
+       * It is required to enumerate audio devices at all — without it getDevices() comes back empty
+       * or throws, so a connected earpiece is invisible no matter what hardware is paired, which is
+       * the root of the "earpods not detected" report. But the app is fully usable on the phone's
+       * own mic and speaker, so this must never gate recording: bundling it into the RECORD_AUDIO
+       * request would mean denying Bluetooth also reports the microphone as denied.
+       */
+      AsyncFunction("requestBluetoothPermission") { promise: Promise ->
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+          // The permission does not exist before API 31; device enumeration is unrestricted there.
+          promise.resolve(
+            mapOf(
+              "status" to "granted",
+              "granted" to true,
+              "canAskAgain" to false,
+              "expires" to "never",
+            )
+          )
+        } else {
+          Permissions.askForPermissionsWithPermissionsManager(
+            appContext.permissions,
+            promise,
+            Manifest.permission.BLUETOOTH_CONNECT,
+          )
+        }
+      }
+
       Function("hasBluetoothSco") { ensureRouting().hasBluetoothScoDevice() }
 
       Function("getRoutingState") {
@@ -85,6 +115,11 @@ class ZaurelinkAudioModule : Module() {
         r.registerScoReceiver()
         if (preferBluetooth && r.hasBluetoothScoDevice()) {
           r.configureForBluetoothSco()
+          // The SCO link is established asynchronously. Recording before it is up captures the first
+          // few hundred ms from the PHONE's microphone instead of the earpiece — a clipped first
+          // word, and on the private channel the wrong microphone entirely. This coroutine is
+          // already off the main thread, so waiting here costs nothing but the wait.
+          r.awaitSco()
         } else {
           r.configureForPhoneMicSpeaker()
         }
