@@ -82,6 +82,10 @@ class ZaurelinkTranslateModule extends NativeModule<{}> {
     this.tier = tier === 'mock' ? 'mock' : this.tier;
   }
 
+  supportsAudioInput(): boolean {
+    return true; // mock accepts anything; web has no mic capture path anyway
+  }
+
   async startConversation(
     environment: Environment,
     appUserLanguage: AppUserLanguage,

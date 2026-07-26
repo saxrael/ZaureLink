@@ -129,6 +129,19 @@ class ZaurelinkTranslateModule : Module() {
 
       Function("getProvider") { tier.value }
 
+      // Whether the ACTIVE model can accept speech. A .litertlm exported without an audio tower
+      // still translates text perfectly well, so this is not a load failure — but it cannot serve
+      // this app's primary flow, and JS needs to know that to pick a usable model rather than
+      // discovering it on every mic press. Meaningful only after a conversation has been started,
+      // because that is when the capability is resolved; true for mock and for anything not yet
+      // opened, so callers default to "usable" rather than needlessly demoting a good model.
+      Function("supportsAudioInput") {
+        when (tier) {
+          ProviderTier.MOCK -> true
+          else -> gemmaProviders[tier]?.supportsAudioInput() ?: true
+        }
+      }
+
       // modelPath is required when switching to "baseline"/"fine_tuned" — the native side has no
       // independent knowledge of where JS downloaded the model (TRD §2.4 hand-off). Engine creation
       // itself is lazy (first startConversation call), so this just records the path.

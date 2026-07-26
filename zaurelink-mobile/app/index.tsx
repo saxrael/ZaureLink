@@ -295,18 +295,9 @@ export default function Screen() {
     setProvider(ZaurelinkTranslate.getProvider());
   }, []);
 
-  // Which model cards the screen offers. Keeping this here rather than inline in the JSX because the
-  // rule it encodes is a product decision, not layout: a new install is asked for ONE ~2.6GB model.
+  // The fine-tuned upgrade is only offered once the baseline is installed, so a first run is never
+  // asked to choose between two ~2.6GB downloads.
   const baselineOnDisk = modelDownload.phase === 'ready';
-  const baselineCardVisible =
-    baselineOnDisk ||
-    modelDownload.phase === 'downloading' ||
-    modelDownload.phase === 'paused' ||
-    modelDownload.phase === 'verifying' ||
-    // The fine-tuned model failed: the baseline is now the only route to offline translation, so it
-    // has to be reachable even on an install that never downloaded it.
-    fineTunedUnusable ||
-    modelDownload.phase === 'error';
 
   // TRD §2.1/§2.4 best-available tier: the fine-tuned artifact wins when it is on disk and verified,
   // the stock baseline is the fallback, and mock covers "no model yet" so the app is never dead
@@ -336,7 +327,26 @@ export default function Screen() {
           desiredTier === 'fine_tuned' ? getFineTunedModelPath() : getModelPath()
         );
         await startSession(environmentRef.current, appUserLanguageRef.current);
-        if (!cancelled) setProvider(desiredTier);
+        if (cancelled) return;
+
+        // A model can load perfectly and still be unable to serve the mic: an export without an
+        // audio tower translates text fine but rejects speech. Speech is the whole product, so a
+        // text-only model must not hold the active slot while an audio-capable one is on disk —
+        // otherwise every mic press fails and the app looks broken. Capability is only knowable
+        // after the first conversation is opened, which is why this is checked here and not before
+        // the switch.
+        if (
+          desiredTier === 'fine_tuned' &&
+          !ZaurelinkTranslate.supportsAudioInput() &&
+          modelDownload.phase === 'ready'
+        ) {
+          setFineTunedUnusable(true);
+          setLastUtterance(
+            'Fine-tuned model has no audio support — using the baseline model so speech keeps working.'
+          );
+          return;
+        }
+        setProvider(desiredTier);
       } catch (e) {
         if (cancelled) return;
         // A fine-tuned model that won't load must not strand the app (TRD §2.4 rollback): mark it
@@ -631,26 +641,22 @@ export default function Screen() {
           </PressScale>
         </View>
 
-        {/* The fine-tuned artifact is THE offline model for a new install (TRD §2.4) — one ~2.6GB
-            download, not two. The stock baseline is deliberately not offered alongside it: a fresh
-            user asked to fetch both would move 5.2GB to end up with one working translator, and the
-            fine-tuned model is the better of the two anyway. Baseline stays visible only where it
-            earns its place — already on disk (installs predating the fine-tune, where it is the
-            active model and the fine-tune is a genuine upgrade), mid-download, or as the fallback
-            when the fine-tuned model has failed and something has to cover for it. */}
-        {baselineCardVisible ? <ModelDownloadCard dl={modelDownload} /> : null}
+        {/* The baseline is the primary download because it is the only artifact that can currently
+            serve the microphone: zaurelink-translator-v1 was exported without an audio tower, so it
+            translates typed text but rejects speech. Offering it as the sole first-run download
+            would mean a new user moves ~2.6GB and lands on an app whose mic does not work. Once a
+            re-export with the audio pathway lands, make it primary again — it is the better model,
+            it just cannot do the job yet. */}
+        <ModelDownloadCard dl={modelDownload} />
 
-        {!fineTunedUnusable ? (
+        {/* Optional, and honest about what it is for. */}
+        {baselineOnDisk && !fineTunedUnusable ? (
           <ModelDownloadCard
             dl={fineTunedDownload}
             config={FINE_TUNED_MODEL_CONFIG}
-            title={baselineOnDisk ? 'Fine-tuned translator' : 'Offline translation model'}
-            blurb={
-              baselineOnDisk
-                ? 'Optional ~2.6GB upgrade: the ZaureLink-tuned model, trained on Hausa market and campus speech. The baseline model stays installed as a fallback.'
-                : 'A one-time ~2.6GB download unlocks fully offline translation — the ZaureLink-tuned model, trained on Hausa market and campus speech. Demo mode works without it.'
-            }
-            readyLabel="Fine-tuned model active"
+            title="Fine-tuned translator (text only)"
+            blurb="Optional ~2.6GB download: the ZaureLink-tuned model, trained on Hausa market and campus speech. This build of it handles typed text only — speech keeps using the baseline model."
+            readyLabel="Fine-tuned model installed"
           />
         ) : null}
 

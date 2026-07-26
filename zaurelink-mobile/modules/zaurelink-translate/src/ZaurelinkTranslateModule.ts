@@ -19,6 +19,10 @@ declare class ZaurelinkTranslateModule extends NativeModule<{}> {
    * creation, whose initialize() can take up to ~10s; that happens lazily on the first
    * startConversation() call after switching, not inside setProvider() itself. */
   setProvider(tier: ProviderTier, modelPath?: string): void;
+  /** Whether the ACTIVE model can accept speech. A model exported without an audio tower translates
+   * text fine but cannot serve the mic, so the app must not select it while an audio-capable model
+   * is available. Only meaningful after a conversation has been started. */
+  supportsAudioInput(): boolean;
   /** Starts a new bounded-memory conversation for the given environment and the app user's
    * selected language (TRD §2.2, FR-14). Called on Mode or Language selection/switch. */
   startConversation(

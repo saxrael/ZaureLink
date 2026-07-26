@@ -216,6 +216,10 @@ class Gemma4BaselineProvider(
    */
   @Volatile private var supportsAudio = true
 
+  /** Whether this model can accept speech. Only meaningful once a conversation has been opened —
+   * the capability cannot be known before then (see [startConversation]). */
+  fun supportsAudioInput(): Boolean = supportsAudio
+
   @OptIn(ExperimentalApi::class)
   private fun ensureEngine(): Engine =
     engine ?: synchronized(engineLock) {
